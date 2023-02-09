@@ -1,0 +1,71 @@
+{
+  "name": "omdb-search-react-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint:fix": "eslint . --fix --ext .js,.jsx",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
+  },
+  "dependencies": {
+    "prop-types": "15.8.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.0.27",
+    "@types/react-dom": "18.0.10",
+    "@vitejs/plugin-react-swc": "3.1.0",
+    "eslint": "8.33.0",
+    "eslint-config-standard-jsx": "11.0.0",
+    "eslint-config-standard-react": "13.0.0",
+    "gh-pages": "5.0.0",
+    "standard": "17.0.0",
+    "vite": "4.1.1"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "./node_modules/standard/eslintrc.json",
+      "./node_modules/eslint-config-standard-jsx/eslintrc.json",
+      "./node_modules/eslint-config-standard-react/eslintrc.json",
+      "plugin:react/jsx-runtime"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest"
+    },
+    "rules": {
+      "jsx-quotes": [
+        "error",
+        "prefer-double"
+      ],
+      "space-before-function-paren": [
+        "error",
+        {
+          "anonymous": "always",
+          "named": "never",
+          "asyncArrow": "always"
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "dist/**",
+    "dist-ssr/**"
+  ],
+  "prettier": {
+    "tabWidth": 2,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "semi": false,
+    "trailingComma": "none"
+  }
+}
