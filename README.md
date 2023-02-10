@@ -26,6 +26,25 @@ This project was bootstrapped with [Create Vite Project](https://vitejs.dev/guid
 npm create vite@latest omdb-search-react-app --template react-swc
 ```
 
+## First Steps
+
+To begin developing this project...
+
+1. Request for an API key using [the following form](https://www.omdbapi.com/apikey.aspx) and create an `env.local` file using `env.example` file.
+
+    ```properties
+    VITE_OMDB_APIKEY="<Your API key>"
+    ```
+
+    E.g.: `4287ad07`
+
+2. Run next instructions in a command prompt:
+
+    ```shell
+    npm install
+    npm run dev
+    ```
+
 ## Available Scripts
 
 In a project where Vite is installed, you can use the `vite` binary in your `npm` scripts, or run it directly with `npx vite`. Here are the default npm scripts in a scaffolded Vite project:
