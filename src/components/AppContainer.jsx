@@ -1,6 +1,6 @@
 import { useId, useState } from 'react'
-import { SearchSubmitButton } from './inputs/SearchSubmitButton'
-import { TitleSearchFormInput } from './inputs/TitleSearchFormInput'
+import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
+import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 
 /**
  * @returns {JSX.Element}

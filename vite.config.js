@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
@@ -12,5 +13,18 @@ const base = mode === 'production' && USE_REPO_PAGES ? `/${REPO_NAME}/` : '/'
 export default defineConfig({
   base,
   mode,
-  plugins: [react()]
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': srcAliasOf(),
+      '@components': srcAliasOf('components'),
+      '@hooks': srcAliasOf('hooks'),
+      '@services': srcAliasOf('services')
+    }
+  }
 })
+
+function srcAliasOf(slug = '') {
+  const url = new URL('./src/' + slug, import.meta.url)
+  return fileURLToPath(url)
+}
