@@ -33,7 +33,7 @@ export function AppContainer() {
         <SearchSubmitButton className="col-1/1" loading={loading} />
       </form>
       <main id={containerId + '-results'} className="omdb-search-results">
-        <MovieList items={movies} />
+        <MovieList items={movies} className="list-reset grid fluid-cols" />
       </main>
     </>
   )

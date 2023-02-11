@@ -16,6 +16,7 @@ body {
 
 #root {
   max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -97,6 +98,28 @@ input[type=number] {
   font-weight: 600;
   position: absolute;
   right: 0;
+}
+
+/* ==============================
+        UTILITIES
+ */
+
+ul.list-reset,
+ol.list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.grid {
+  --gap: 12px;
+  display: grid;
+  gap: calc(var(--gap))
+}
+
+.grid.fluid-cols {
+  --fluid-min-width: 200px;
+  grid-template-columns: repeat(auto-fit, minmax(var(--fluid-min-width, 200px), 1fr));
 }
 
 /* ==============================
