@@ -19,8 +19,12 @@ export function AppContainer() {
     /** @type {import('react').SyntheticEvent} */ event
   ) => {
     event.preventDefault()
+    const form = event.target
+    const formData = new FormData(form)
+    const formDataEntries = Object.fromEntries(formData)
     setLoading(true)
     // TODO: Implement handleSearchFormSubmit and remove this mock
+    console.log(formDataEntries)
     clearTimeout(loadingTimer.current)
     loadingTimer.current = setTimeout(() => {
       // if there are search results, go to them,
