@@ -1,15 +1,16 @@
 import { useId } from 'react'
-import PropTypes from 'prop-types'
+import reactPropTypes from 'prop-types'
 import clsx from 'clsx'
+import corePropTypes from '../prop-types'
 
 /**
  *
- * @param {Object} props
- * @param {string=} [props.name="title"]
- * @param {string=} [props.labelText="Title"]
- * @param {string|string[]=} props.className
- * @param {boolean=} [props.required=false]
- * @param {string=} props.placeholder
+ * @param {Object} props -
+ * @param {string=} [props.name="title"] -
+ * @param {string=} [props.labelText="Title"] -
+ * @param {string|string[]=} props.className -
+ * @param {boolean=} [props.required=false] -
+ * @param {string=} props.placeholder -
  * @returns {JSX.Element}
  */
 export function TitleSearchFormInput({
@@ -36,12 +37,9 @@ export function TitleSearchFormInput({
 }
 
 TitleSearchFormInput.propTypes = {
-  name: PropTypes.string,
-  className: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.arrayOf(PropTypes.string)
-  ]),
-  labelText: PropTypes.string,
-  required: PropTypes.bool,
-  placeholder: PropTypes.string
+  name: reactPropTypes.string,
+  className: corePropTypes.clsxClassName,
+  labelText: reactPropTypes.string,
+  required: reactPropTypes.bool,
+  placeholder: reactPropTypes.string
 }

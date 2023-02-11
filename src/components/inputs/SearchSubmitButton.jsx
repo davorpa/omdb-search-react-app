@@ -1,13 +1,14 @@
-import PropTypes from 'prop-types'
+import reactPropTypes from 'prop-types'
 import clsx from 'clsx'
 import { GoSearch } from 'react-icons/go'
+import corePropTypes from '../prop-types'
 
 /**
  *
- * @param {Object} props
- * @param {string|string[]=} props.className
- * @param {boolean=} [props.loading=false]
- * @returns {JSX.Element}
+ * @param {Object} props -
+ * @param {string|string[]=} props.className -
+ * @param {boolean=} [props.loading=false] -
+ * @returns {JSX.Element} -
  */
 export function SearchSubmitButton({ className, loading = false }) {
   return (
@@ -19,6 +20,6 @@ export function SearchSubmitButton({ className, loading = false }) {
 }
 
 SearchSubmitButton.propTypes = {
-  className: PropTypes.string,
-  loading: PropTypes.bool
+  className: corePropTypes.clsxClassName,
+  loading: reactPropTypes.bool
 }

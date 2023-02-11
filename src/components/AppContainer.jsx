@@ -1,8 +1,8 @@
 import { useId, useState } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
+import { MovieList } from '@components/movies'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
-import { MovieList } from './movies'
 
 /**
  * @returns {JSX.Element}
