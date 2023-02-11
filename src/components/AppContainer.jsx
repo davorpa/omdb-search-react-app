@@ -1,4 +1,4 @@
-import { useId, useState } from 'react'
+import { useId, useState, useRef } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { MovieList } from '@components/movies'
@@ -10,6 +10,7 @@ import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 export function AppContainer() {
   const containerId = useId()
   const [loading, setLoading] = useState(false)
+  const loadingTimer = useRef(null)
   const { results: movies } = useOMDbSearchTitle()
 
   const handleSearchFormSubmit = (
@@ -18,7 +19,10 @@ export function AppContainer() {
     event.preventDefault()
     setLoading(true)
     // TODO: Implement handleSearchFormSubmit and remove this mock
-    setTimeout(() => setLoading(false), Math.random() * 2000)
+    clearTimeout(loadingTimer.current)
+    loadingTimer.current = setTimeout(() => {
+      setLoading(false)
+    }, Math.random() * 2000)
   }
 
   return (
