@@ -1,6 +1,27 @@
 {
   "Search": [
     {
+      "Title": "xXx",
+      "Year": "2002",
+      "imdbID": "tt0295701",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BYjYwMzg4MTAtYTQ3NC00MjdlLWEzNGEtNzQwYzA3OGZmZWYyXkEyXkFqcGdeQXVyMjUzOTY1NTc@._V1_SX300.jpg"
+    },
+    {
+      "Title": "xXx: Return of Xander Cage",
+      "Year": "2017",
+      "imdbID": "tt1293847",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMzcwMjkxMzQ3NV5BMl5BanBnXkFtZTgwMzgyNDA5MDI@._V1_SX300.jpg"
+    },
+    {
+      "Title": "xXx: State of the Union",
+      "Year": "2005",
+      "imdbID": "tt0329774",
+      "Type": "movie",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BMjY4ZGQ2OGItNGQ4NC00MWVmLTgxMzktYThjNmRlNjYzYjQ0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+    },
+    {
       "Title": "London 2012: Games of the XXX Olympiad",
       "Year": "2012",
       "imdbID": "tt2222382",

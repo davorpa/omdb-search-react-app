@@ -1,6 +1,8 @@
 import { useId, useState } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
+import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
+import missingIMDbPosterImage from '../assets/missing-imdb-poster.png'
 
 /**
  * @returns {JSX.Element}
@@ -8,6 +10,7 @@ import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 export function AppContainer() {
   const containerId = useId()
   const [loading, setLoading] = useState(false)
+  const { results: movies } = useOMDbSearchTitle()
 
   const handleSearchFormSubmit = (
     /** @type {import('react').SyntheticEvent} */ event
@@ -30,7 +33,26 @@ export function AppContainer() {
         <SearchSubmitButton className="col-1/1" loading={loading} />
       </form>
       <main id={containerId + '-results'} className="omdb-search-results">
-        The search results are placed here
+        {movies?.length > 0 ? (
+          <ul>
+            {movies.map((movie) => (
+              <li key={movie.imdbID}>
+                <h3>{movie.title}</h3>
+                <p>{movie.year}</p>
+                {movie.posterUrls ? (
+                  <img
+                    src={movie.posterUrls.sx300}
+                    alt={`"${movie.title}"'s poster`}
+                  />
+                ) : (
+                  <img src={missingIMDbPosterImage} alt="Missing IMDb poster" />
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          'No results'
+        )}
       </main>
     </>
   )
