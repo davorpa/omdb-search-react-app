@@ -13,6 +13,7 @@ export function AppContainer() {
   const loadingTimer = useRef(null)
   const { results: movies } = useOMDbSearchTitle()
   const searchResultsLayerRef = useRef(null)
+  const titleSearchFormInputRef = useRef(null)
 
   const handleSearchFormSubmit = (
     /** @type {import('react').SyntheticEvent} */ event
@@ -22,6 +23,9 @@ export function AppContainer() {
     // TODO: Implement handleSearchFormSubmit and remove this mock
     clearTimeout(loadingTimer.current)
     loadingTimer.current = setTimeout(() => {
+      // if there are search results, go to them,
+      // TODO: else go to first form input
+      titleSearchFormInputRef.current.focus()
       searchResultsLayerRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
@@ -38,7 +42,11 @@ export function AppContainer() {
         className="form-input-container omdb-search-form"
         onSubmit={handleSearchFormSubmit}
       >
-        <TitleSearchFormInput className="omdb-search-title col-1/1" required />
+        <TitleSearchFormInput
+          ref={titleSearchFormInputRef}
+          className="omdb-search-title col-1/1"
+          required
+        />
 
         <SearchSubmitButton className="col-1/1" loading={loading} />
       </form>
@@ -47,7 +55,7 @@ export function AppContainer() {
         id={containerId + '-results'}
         className="omdb-search-results"
       >
-        <MovieList items={movies} className="list-reset grid fluid-cols" />
+        <MovieList items={movies} className="grid fluid-cols no-bullets" />
       </main>
     </>
   )
