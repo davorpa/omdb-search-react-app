@@ -82,7 +82,10 @@ export function MovieListItemCard({ data, className }) {
   const hasPoster = !!posterUrls /** === null */
 
   return (
-    <li className={clsx(className)} data-id={imdbID}>
+    <li
+      className={clsx('card', hasPoster && 'no-poster', className)}
+      data-id={imdbID}
+    >
       <h3>{title}</h3>
       <p>{year}</p>
       <p>{type}</p>

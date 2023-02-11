@@ -89,8 +89,12 @@ input[type=number] {
   flex-basis: calc(25% - 10px);
 }
 
+.form-input.required {
+  --required-mark: "(*)"
+}
+
 .form-input.required label::after {
-  content: "(*)";
+  content: var(--required-mark);
   display: inline-block;
   padding-left: 10px;
   color: #a00;
@@ -101,12 +105,64 @@ input[type=number] {
 }
 
 /* ==============================
+        CARDS
+ */
+
+.card {
+  border: 1px solid var(--focus);
+  padding: 10px;
+  border-radius: 6px;
+  box-shadow: 1px 1px 6px var(--focus);
+  display: flex;
+  flex-direction: column-reverse;
+  place-items: center;
+  position: relative;
+}
+
+.card > * {
+  margin: 0;
+  padding: 0;
+}
+
+.card > h3 {
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  min-height: 50px;
+  margin: 10px 0 30px;
+}
+
+.card > h3::before {
+  content: "";
+  border: 1px solid var(--focus);
+  display: block;
+  margin: 6px 0;
+}
+
+.card > p {
+  order: -1;
+  position: absolute;
+  width: 50%;
+  text-align: center;
+  right: 0;
+}
+
+.card > p + p {
+  left: 0;
+}
+
+.card > img {
+  align-self: center;
+}
+
+/* ==============================
         UTILITIES
  */
 
-ul.list-reset,
-ol.list-reset {
-  list-style: none;
+ul.no-bullets,
+ol.no-bullets {
+  list-style-type: none;
   margin: 0;
   padding: 0;
 }
