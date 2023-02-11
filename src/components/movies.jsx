@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import reactPropTypes from 'prop-types'
 import clsx from 'clsx'
 import corePropTypes from './prop-types'
@@ -29,30 +30,39 @@ export const PropTypes = {
 }
 
 /**
- *
- * @param {Object} props
- * @param {Array<import('../services/omdb').OMDbMoviesDTO>} props.items
- * @param {string|string[]=} props.className
- * @param {string|string[]=} [props.classNameOnEmpty="no-results"]
- * @returns {JSX.Element}
+ * A MovieList referenced component to render a list of movie cards
+ * @see MovieListItemCard
  */
-export function MovieList({
-  items,
-  className,
-  classNameOnEmpty = 'no-results'
-}) {
-  const itemsLength = items?.length || 0
-  const hasItems = itemsLength > 0
+export const MovieList = forwardRef(
+  /**
+   *
+   * @param {Object} props -
+   * @param {Array<import('../services/omdb').OMDbMoviesDTO>} props.items -
+   * @param {string|string[]=} props.className -
+   * @param {string|string[]=} [props.classNameOnEmpty="no-results"] -
+   * @param {import('react').ForwardedRef<*>=} ref -
+   *      A `React.useRef` reference to hook this wrapped input
+   * @returns {JSX.Element}
+   */ ({ items, className, classNameOnEmpty = 'no-results' }, ref) => {
+    const itemsLength = items?.length || 0
+    const hasItems = itemsLength > 0
 
-  if (!hasItems) return <p className={clsx(classNameOnEmpty)}>No results</p>
-  return (
-    <ul className={clsx(className)}>
-      {items.map((movie) => (
-        <MovieListItemCard key={movie.imdbID} data={movie} />
-      ))}
-    </ul>
-  )
-}
+    if (!hasItems) {
+      return (
+        <p ref={ref} className={clsx(classNameOnEmpty)}>
+          No results
+        </p>
+      )
+    }
+    return (
+      <ul ref={ref} className={clsx(className)}>
+        {items.map((movie) => (
+          <MovieListItemCard key={movie.imdbID} data={movie} />
+        ))}
+      </ul>
+    )
+  }
+)
 
 MovieList.propTypes = {
   items: reactPropTypes.arrayOf(PropTypes.movie),
@@ -62,9 +72,9 @@ MovieList.propTypes = {
 
 /**
  *
- * @param {Object} props
- * @param {import('../services/omdb').OMDbMoviesDTO} props.data
- * @param {string|string[]=} props.className
+ * @param {Object} props -
+ * @param {import('../services/omdb').OMDbMoviesDTO} props.data -
+ * @param {string|string[]=} props.className -
  * @returns {JSX.Element}
  */
 export function MovieListItemCard({ data, className }) {
@@ -85,6 +95,6 @@ export function MovieListItemCard({ data, className }) {
 }
 
 MovieListItemCard.propTypes = {
-  data: moviePropType.isRequired,
+  data: PropTypes.movie.isRequired,
   className: corePropTypes.clsxClassName
 }
