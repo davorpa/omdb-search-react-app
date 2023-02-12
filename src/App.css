@@ -41,13 +41,13 @@ input[type=number] {
  */
 
 .form-input-container {
-  --gap: 12px;
+  --form-gap: 12px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: var(--gap);
-  margin-bottom: var(--gap);
+  gap: var(--form-gap);
+  margin-bottom: calc(var(--form-gap) * 2);
 }
 
 .form-input-container .form-input {
@@ -109,14 +109,16 @@ input[type=number] {
  */
 
 .card {
-  border: 1px solid var(--focus);
+  --card-color: var(--focus);
+  border: 1px dotted var(--card-color);
   padding: 10px;
   border-radius: 6px;
-  box-shadow: 1px 1px 6px var(--focus);
+  box-shadow: 1px 1px 6px var(--card-color);
   display: flex;
   flex-direction: column-reverse;
   place-items: center;
   position: relative;
+  min-height: var(--card-height, 0);
 }
 
 .card > * {
@@ -124,20 +126,19 @@ input[type=number] {
   padding: 0;
 }
 
-.card > h3 {
+.card .card-title {
   width: 100%;
   font-weight: bold;
   text-align: center;
   position: relative;
-  min-height: 50px;
-  margin: 10px 0 30px;
-}
+  margin: 6px 0 30px;
+  min-height: var(--card-title-height, 0);
+  font-size: 1.1em;
 
-.card > h3::before {
-  content: "";
-  border: 1px solid var(--focus);
-  display: block;
-  margin: 6px 0;
+  border-top: dotted var(--card-color);
+  border-top-width: 2px;
+  display: grid;
+  align-items: center;
 }
 
 .card > p {
@@ -152,8 +153,16 @@ input[type=number] {
   left: 0;
 }
 
-.card > img {
-  align-self: center;
+.card .card-img {
+  max-height: var(--card-image-height, 300px);
+  width: 100%;
+}
+
+.omdb-search-results {
+  padding-top: 12px;
+  --card-height: 425px;
+  --card-title-height: 63px;
+  --card-image-height: 300px;
 }
 
 /* ==============================
@@ -168,7 +177,7 @@ ol.no-bullets {
 }
 
 .grid {
-  --gap: 12px;
+  --gap: 24px;
   display: grid;
   gap: calc(var(--gap))
 }

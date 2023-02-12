@@ -86,12 +86,22 @@ export function MovieListItemCard({ data, className }) {
       className={clsx('card', hasPoster && 'no-poster', className)}
       data-id={imdbID}
     >
-      <h3>{title}</h3>
-      <p>{year}</p>
-      <p>{type}</p>
-      {hasPoster && <img src={posterUrls.sx300} alt={`"${title}"'s poster`} />}
+      <h3 className="card-title movie-title">{title}</h3>
+      <p className="movie-year">{year}</p>
+      <p className="movie-type">{type}</p>
+      {hasPoster && (
+        <img
+          className="card-img movie-poster"
+          src={posterUrls.sx300}
+          alt={`"${title}"'s poster`}
+        />
+      )}
       {!hasPoster && (
-        <img src={missingIMDbPosterImage} alt="Missing IMDb poster" />
+        <img
+          className="card-img movie-poster"
+          src={missingIMDbPosterImage}
+          alt="Missing IMDb poster"
+        />
       )}
     </li>
   )
