@@ -11,7 +11,11 @@ export function AppContainer() {
   const containerId = useId()
   const [loading, setLoading] = useState(false)
   const loadingTimer = useRef(null)
-  const { results: movies } = useOMDbSearchTitle()
+  const {
+    searchParams,
+    updateSearchParam,
+    results: movies
+  } = useOMDbSearchTitle()
   const searchResultsLayerRef = useRef(null)
   const titleSearchFormInputRef = useRef(null)
 
@@ -47,6 +51,9 @@ export function AppContainer() {
         onSubmit={handleSearchFormSubmit}
       >
         <TitleSearchFormInput
+          name="title"
+          value={searchParams.title}
+          valueSetter={updateSearchParam}
           ref={titleSearchFormInputRef}
           className="omdb-search-title col-1/1"
           required

@@ -8,7 +8,7 @@ Requerimientos:
 
 - [x] Necesita mostrar un input para buscar la película y un botón para buscar.
 - [x] Lista las películas y muestra el título, año y poster.
-- [ ] Que el formulario funcione
+- [x] Que el formulario funcione
 - [x] Haz que las películas se muestren en un grid responsive.
 - [ ] Hacer el fetching de datos a la API
 
