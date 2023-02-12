@@ -16,8 +16,18 @@ export const useOMDbSearchTitle = (
   }
 ) => {
   const [searchParams, setSearchParams] = useState(initialSearchParams)
+  const [messages, setMessages] = useState({}) // no error messages
   const [results, setSearchResults] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const addMessage = useCallback(
+    (key, messageText) => {
+      const newMessages = { ...messages }
+      newMessages[key] = messageText
+      setMessages(newMessages)
+    },
+    [messages]
+  )
 
   const updateSearchParam = useCallback(
     (value, key) => {
@@ -32,6 +42,7 @@ export const useOMDbSearchTitle = (
   // TODO: Replace mocked parts by an API fetch call
   const executeSearch = useCallback(() => {
     setLoading(true)
+    setMessages({}) // clearMessages
     let fileName = Math.random() * 100 > 75 ? 'ok-page-results' : 'no-results'
     if (
       !Object.prototype.hasOwnProperty.call(searchParams, 'title') ||
@@ -43,7 +54,7 @@ export const useOMDbSearchTitle = (
     }
 
     import(`../services/omdb/data/titlesearch/${fileName}.json`)
-      .then((data) => {
+      .then(({ default: data }) => {
         /** @type {Array<import('../services/omdb').OMDbMoviesDTO>} */
         const results = Array.from(
           /** @type {Array<import('../services/omdb').OMDbMoviesApiDTO>} */
@@ -52,19 +63,26 @@ export const useOMDbSearchTitle = (
         ).filter((item) =>
           stringCaseInsensitiveContains(item.title, searchParams.title)
         )
+        fileName !== 'no-results' &&
+          data.Response === 'False' &&
+          addMessage('*', data.Error)
         setSearchResults(results)
+      })
+      .catch((e) => {
+        addMessage('*', e.message)
       })
       .finally(() => {
         setLoading(false)
       })
-  }, [searchParams])
+  }, [searchParams, addMessage])
 
   return {
     searchParams,
     updateSearchParam,
     loading,
     results,
-    executeSearch
+    executeSearch,
+    messages
   }
 }
 

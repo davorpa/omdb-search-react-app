@@ -37,6 +37,33 @@ input[type=number] {
 }
 
 /* ==============================
+        MESSAGE NOTES
+ */
+
+div.message {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-left: 6px solid #8b8b8b;
+}
+
+div.message.danger {
+  background-color: #ffdddd;
+  border-color: #f44336;
+}
+div.message.success {
+  background-color: #ddffdd;
+  border-color: #04AA6D;
+}
+div.message.info {
+  background-color: #e7f3fe;
+  border-color: #2196F3;
+}
+div.message.warning {
+  background-color: #ffffcc;
+  border-color: #ffeb3b;
+}
+
+/* ==============================
         FORMS
  */
 

@@ -14,7 +14,8 @@ export function AppContainer() {
     updateSearchParam,
     loading,
     results: movies,
-    executeSearch
+    executeSearch,
+    messages
   } = useOMDbSearchTitle()
   const searchResultsLayerRef = useRef(null)
   const titleSearchFormInputRef = useRef(null)
@@ -45,6 +46,9 @@ export function AppContainer() {
 
   return (
     <>
+      {messages['*'] /** Print global messages */ && (
+        <div className="message danger">{messages['*']}</div>
+      )}
       <form
         action={'#' + containerId + '-results'}
         className="form-input-container omdb-search-form"
@@ -54,6 +58,7 @@ export function AppContainer() {
           name="title"
           value={searchParams.title}
           valueSetter={updateSearchParam}
+          errors={messages.title}
           ref={titleSearchFormInputRef}
           className="omdb-search-title col-1/1"
           required
