@@ -167,6 +167,10 @@ input[type=number] {
   --card-image-height: 300px;
 }
 
+.omdb-search-results .no-results {
+  text-align: center;
+}
+
 /* ==============================
         UTILITIES
  */

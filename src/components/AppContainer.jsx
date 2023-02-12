@@ -1,4 +1,4 @@
-import { useId, useState, useRef } from 'react'
+import { useId, useState, useRef, useEffect } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { MovieList } from '@components/movies'
@@ -9,38 +9,38 @@ import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
  */
 export function AppContainer() {
   const containerId = useId()
-  const [loading, setLoading] = useState(false)
-  const loadingTimer = useRef(null)
   const {
     searchParams,
     updateSearchParam,
-    results: movies
+    loading,
+    results: movies,
+    executeSearch
   } = useOMDbSearchTitle()
   const searchResultsLayerRef = useRef(null)
   const titleSearchFormInputRef = useRef(null)
 
-  const handleSearchFormSubmit = (
-    /** @type {import('react').SyntheticEvent} */ event
-  ) => {
-    event.preventDefault()
-    const form = event.target
-    const formData = new FormData(form)
-    const formDataEntries = Object.fromEntries(formData)
-    setLoading(true)
-    // TODO: Implement handleSearchFormSubmit and remove this mock
-    console.log(formDataEntries)
-    clearTimeout(loadingTimer.current)
-    loadingTimer.current = setTimeout(() => {
-      // if there are search results, go to them,
-      // TODO: else go to first form input
-      titleSearchFormInputRef.current.focus()
+  const searchEffectMonitorRef = useRef(true)
+  useEffect(() => {
+    if (searchEffectMonitorRef.current) {
+      searchEffectMonitorRef.current = false
+      return
+    }
+    if (movies.length) {
       searchResultsLayerRef.current.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
         inline: 'center'
       })
-      setLoading(false)
-    }, Math.random() * 2000)
+    } else {
+      titleSearchFormInputRef.current.focus()
+    }
+  }, [movies])
+
+  const handleSearchFormSubmit = (
+    /** @type {import('react').SyntheticEvent} */ event
+  ) => {
+    event.preventDefault()
+    executeSearch()
   }
 
   return (
