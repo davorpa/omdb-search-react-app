@@ -1,5 +1,6 @@
 import { OMDbError } from './OMDbError'
 import titleSearchWithoutResultsResponse from './data/titlesearch/no-results.json'
+import { stringCaseInsensitiveEquals } from '../utils'
 
 /**
  * @enum {string}
@@ -183,15 +184,3 @@ export const posterUrlsExtractor = (/** @type {string} */ posterUrl) =>
           fullsize: posterUrl.replace(rePosterUrlSize, '')
         }
   )
-
-function stringCaseInsensitiveEquals(a, b) {
-  return typeof a === 'string' && typeof b === 'string'
-    ? a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0
-    : a === b
-}
-
-function stringCaseInsensitiveContains(a, b) {
-  return typeof a === 'string' && typeof b === 'string'
-    ? a.toLocaleLowerCase().includes(b.toLocaleLowerCase())
-    : a === b
-}
