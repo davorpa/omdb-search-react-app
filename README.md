@@ -18,6 +18,11 @@ Primera iteración:
 - [ ] Haz que la búsqueda se haga automáticamente al escribir.
 - [ ] Evita que se haga la búsqueda continuamente al escribir (debounce)
 
+Segunda iteración:
+
+- [ ] Busca por los demás campos que permite la API.
+- [ ] Haz que se pueda ordenar por alguno de los campos. (ej. titulo).
+
 ---
 
 This project was bootstrapped with [Create Vite Project](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) configured with a **React SWC** template:
