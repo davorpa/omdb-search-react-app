@@ -195,11 +195,17 @@ div.message.warning {
 }
 
 @media (min-width: 540px) {
-  .omdb-search-title {
+  .omdb-search-form .omdb-search-title {
     flex-basis: auto !important;
   }
-  .omdb-search-year {
+  .omdb-search-form .omdb-search-year {
     flex: 0 0 130px !important;
+  }
+}
+
+@media (min-width: 680px) {
+  .omdb-search-form .omdb-search-type {
+    flex: 0 0 140px !important;
   }
 }
 
@@ -210,7 +216,7 @@ div.message.warning {
 
 /* Positioning */
 
-.absolute { 
+.absolute {
   position: absolute;
 }
 
@@ -219,7 +225,11 @@ div.message.warning {
 }
 
 .fixed {
-  position: relative;
+  position: fixed;
+}
+
+.sticky {
+  position: sticky;
 }
 
 .inset-0 {

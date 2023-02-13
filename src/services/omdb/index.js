@@ -49,7 +49,7 @@ const OMDbFormatType = Object.freeze({
  * @see http://www.omdbapi.com/swagger.json
  * @interface
  */
-class OMDbAbstractClient {
+export class OMDbAbstractClient {
   #apiUrl = 'https://www.omdbapi.com/'
   #apiKey = ''
 

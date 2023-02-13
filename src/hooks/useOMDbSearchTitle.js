@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 import { useOMDbClient } from '@hooks/useOMDbClient'
 
 /**
@@ -8,19 +8,22 @@ import { useOMDbClient } from '@hooks/useOMDbClient'
  * @param {Object} initialSearchParams -
  * @param {string=} initialSearchParams.title -
  * @param {number=} initialSearchParams.year -
+ * @param {string=} initialSearchParams.type -
  *
  * @see https://www.omdbapi.com
  */
 export const useOMDbSearchTitle = (
   initialSearchParams = {
     title: '',
-    year: undefined
+    year: undefined,
+    type: ''
   }
 ) => {
   const [searchParams, setSearchParams] = useState(initialSearchParams)
   const [messages, setMessages] = useState({}) // no error messages
   const [results, setSearchResults] = useState([])
   const [loading, setLoading] = useState(false)
+  /** @type {import('../services/omdb').OMDbAbstractClient} */
   const omdbClient = useOMDbClient()
 
   const addMessage = useCallback(
@@ -48,6 +51,7 @@ export const useOMDbSearchTitle = (
      * @param {Object} searchParams
      * @param {string=} searchParams.title -
      * @param {number=} searchParams.year -
+     * @param {string=} searchParams.type -
      */
     (searchParams) => {
       if (previousSearchParamsRef.current === searchParams) return
@@ -58,13 +62,14 @@ export const useOMDbSearchTitle = (
       omdbClient
         .titleSearch({
           title: searchParams.title,
-          year: searchParams.year
+          year: searchParams.year,
+          resultType: searchParams.type
         })
         .then((data) => {
           setSearchResults(data)
         })
         .catch((e) => {
-          addMessage('*', e.message)
+          addMessage('*', e.message) // assume all errors are global
         })
         .finally(() => {
           setLoading(false)

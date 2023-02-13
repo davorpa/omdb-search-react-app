@@ -20,7 +20,7 @@ Primera iteración:
 
 Segunda iteración:
 
-- [ ] Busca por los demás campos que permite la API.
+- [x] Busca por los demás campos que permite la API.
 - [ ] Haz que se pueda ordenar por alguno de los campos. (ej. titulo).
 
 ---

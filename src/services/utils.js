@@ -13,3 +13,18 @@ export function stringCaseInsensitiveContains(a, b) {
 export function stringIsFalse(a) {
   return typeof a === 'string' ? a.toLocaleLowerCase() === 'false' : a === false
 }
+
+export function stringIsTrue(a) {
+  return typeof a === 'string' ? a.toLocaleLowerCase() === 'true' : a === true
+}
+
+export function stringToTitleCase(a) {
+  if (typeof a === 'string') {
+    return a.replace(
+      /\w\S*/g,
+      (txt) =>
+        txt.charAt(0).toLocaleUpperCase() + txt.substr(1).toLocaleLowerCase()
+    )
+  }
+  return a
+}

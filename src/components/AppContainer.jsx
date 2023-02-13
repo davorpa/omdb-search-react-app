@@ -2,6 +2,7 @@ import { useId, useRef, useEffect } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { YearSearchFormInput } from '@components/inputs/YearSearchFormInput'
+import { TypeSearchFormSelectInput } from '@components/inputs/TypeSearchFormSelectInput'
 import { MovieList } from '@components/movies'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
@@ -71,7 +72,16 @@ export function AppContainer() {
           value={searchParams.year}
           valueSetter={updateSearchParam}
           errors={messages.year}
-          className="omdb-search-year col-1/3"
+          className="omdb-search-year col-1/2"
+        />
+
+        <TypeSearchFormSelectInput
+          name="type"
+          labelText="Type"
+          value={searchParams.type}
+          valueSetter={updateSearchParam}
+          errors={messages.type}
+          className="omdb-search-type col-1/2"
         />
 
         <SearchSubmitButton className="col-1/1" loading={loading} />
