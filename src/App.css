@@ -194,13 +194,57 @@ div.message.warning {
   --card-image-height: 300px;
 }
 
-.omdb-search-results .no-results {
-  text-align: center;
+@media (min-width: 540px) {
+  .omdb-search-title {
+    flex-basis: auto !important;
+  }
+  .omdb-search-year {
+    flex: 0 0 130px !important;
+  }
 }
+
 
 /* ==============================
         UTILITIES
  */
+
+/* Positioning */
+
+.absolute { 
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.fixed {
+  position: relative;
+}
+
+.inset-0 {
+  inset: 0;
+}
+
+/* Text */
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+/* Layout */
 
 ul.no-bullets,
 ol.no-bullets {

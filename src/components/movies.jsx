@@ -25,7 +25,10 @@ export const MovieList = forwardRef(
 
     if (!hasItems) {
       return (
-        <div ref={ref} className={clsx('message', 'info', classNameOnEmpty)}>
+        <div
+          ref={ref}
+          className={clsx('message', 'info', 'text-center', classNameOnEmpty)}
+        >
           No results
         </div>
       )
