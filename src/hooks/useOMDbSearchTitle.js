@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useOMDbClient } from '@hooks/useOMDbClient'
 
 /**
@@ -42,10 +42,13 @@ export const useOMDbSearchTitle = (
     [searchParams]
   )
 
+  const previousSearchParamsRef = useRef(searchParams)
   const executeSearch = useCallback(() => {
+    if (previousSearchParamsRef.current === searchParams) return
     setLoading(true)
     setMessages({}) // clearMessages
 
+    previousSearchParamsRef.current = searchParams
     omdbClient
       .titleSearch({
         title: searchParams.title,
