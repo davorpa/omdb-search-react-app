@@ -1,3 +1,5 @@
+import { OMDbError } from './OMDbError'
+
 /**
  * @enum {string}
  * @readonly
@@ -35,6 +37,66 @@ export const OMDbResultType = Object.freeze({
  */
 
 /**
+ * Represents a simple OMDb API client definition
+ *
+ * @see https://www.omdbapi.com
+ */
+export class OMDbClient {
+  #apiUrl = 'https://www.omdbapi.com/'
+  #apiKey = ''
+
+  /**
+   * @param {string} apiKey -
+   * @constructor
+   */
+  constructor(apiKey) {
+    this.#apiKey = apiKey
+  }
+
+  /**
+   * Returns an array of results for a given title
+   * @param {Object} searchParams - The params used to look for a result
+   * @param {string} searchParams.title - The param that represents the title of movie or series to search in
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode...)
+   * @param {string=} searchParams.year - The param that represents the year of release to search in
+   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
+   * @returns {Promise<OMDbMoviesDTO>}
+   */
+  titleSearch({
+    /** @type {string} */ title,
+    /** @type {OMDbResultType=} */ resultType,
+    /** @type {string=} */ year,
+    /** @type {number=} */ page = 1
+  } = {}) {
+    let fileName = Math.random() * 100 > 75 ? 'ok-page-results' : 'no-results'
+    if (title === '') {
+      fileName = 'empty-route-param'
+    } else if (/\s+/.test(title)) {
+      fileName = 'too-many-results'
+    }
+
+    return import(`./data/titlesearch/${fileName}.json`)
+      .then(({ default: data }) => {
+        /** @type {Array<OMDbMoviesDTO>} */
+        const results = Array.from(
+          /** @type {Array<OMDbMoviesApiDTO>} */
+          data?.Search ?? [],
+          titleSearchResultMapper
+        ).filter((item) => stringCaseInsensitiveContains(item.title, title))
+        if (fileName !== 'no-results' && data.Response === 'False') {
+          throw new OMDbError(data.Error)
+        }
+        return results
+      })
+      .catch((e) => {
+        throw new OMDbError(e.message)
+      })
+  }
+}
+
+export default OMDbClient
+
+/**
  * The type definition for one OMDb poster URL entity
  *
  * @typedef OMDbMoviePostersDTO
@@ -69,3 +131,15 @@ export const posterUrlsExtractor = (/** @type {string} */ posterUrl) =>
           fullsize: posterUrl.replace(rePosterUrlSize, '')
         }
   )
+
+function stringCaseInsensitiveEquals(a, b) {
+  return typeof a === 'string' && typeof b === 'string'
+    ? a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0
+    : a === b
+}
+
+function stringCaseInsensitiveContains(a, b) {
+  return typeof a === 'string' && typeof b === 'string'
+    ? a.toLocaleLowerCase().includes(b.toLocaleLowerCase())
+    : a === b
+}

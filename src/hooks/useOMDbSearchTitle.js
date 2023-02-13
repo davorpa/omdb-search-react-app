@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { titleSearchResultMapper } from '@services/omdb'
+import { useOMDbClient } from '@hooks/useOMDbClient'
 
 /**
  * React Hook to interact with the results returned by
@@ -19,6 +19,7 @@ export const useOMDbSearchTitle = (
   const [messages, setMessages] = useState({}) // no error messages
   const [results, setSearchResults] = useState([])
   const [loading, setLoading] = useState(false)
+  const omdbClient = useOMDbClient()
 
   const addMessage = useCallback(
     (key, messageText) => {
@@ -39,34 +40,16 @@ export const useOMDbSearchTitle = (
     [searchParams]
   )
 
-  // TODO: Replace mocked parts by an API fetch call
   const executeSearch = useCallback(() => {
     setLoading(true)
     setMessages({}) // clearMessages
-    let fileName = Math.random() * 100 > 75 ? 'ok-page-results' : 'no-results'
-    if (
-      !Object.prototype.hasOwnProperty.call(searchParams, 'title') ||
-      searchParams.title === ''
-    ) {
-      fileName = 'empty-route-param'
-    } else if (/\s+/.test(searchParams.title)) {
-      fileName = 'too-many-results'
-    }
 
-    import(`../services/omdb/data/titlesearch/${fileName}.json`)
-      .then(({ default: data }) => {
-        /** @type {Array<import('../services/omdb').OMDbMoviesDTO>} */
-        const results = Array.from(
-          /** @type {Array<import('../services/omdb').OMDbMoviesApiDTO>} */
-          data?.Search ?? [],
-          titleSearchResultMapper
-        ).filter((item) =>
-          stringCaseInsensitiveContains(item.title, searchParams.title)
-        )
-        fileName !== 'no-results' &&
-          data.Response === 'False' &&
-          addMessage('*', data.Error)
-        setSearchResults(results)
+    omdbClient
+      .titleSearch({
+        title: searchParams.title
+      })
+      .then((data) => {
+        setSearchResults(data)
       })
       .catch((e) => {
         addMessage('*', e.message)
@@ -74,7 +57,7 @@ export const useOMDbSearchTitle = (
       .finally(() => {
         setLoading(false)
       })
-  }, [searchParams, addMessage])
+  }, [omdbClient, searchParams, addMessage])
 
   return {
     searchParams,
@@ -84,16 +67,4 @@ export const useOMDbSearchTitle = (
     executeSearch,
     messages
   }
-}
-
-function stringCaseInsensitiveEquals(a, b) {
-  return typeof a === 'string' && typeof b === 'string'
-    ? a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0
-    : a === b
-}
-
-function stringCaseInsensitiveContains(a, b) {
-  return typeof a === 'string' && typeof b === 'string'
-    ? a.toLocaleLowerCase().includes(b.toLocaleLowerCase())
-    : a === b
 }

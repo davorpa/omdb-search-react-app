@@ -1,4 +1,4 @@
-import { useId, useState, useRef, useEffect } from 'react'
+import { useId, useRef, useEffect } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { MovieList } from '@components/movies'
