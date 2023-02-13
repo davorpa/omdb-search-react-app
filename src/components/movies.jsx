@@ -2,32 +2,8 @@ import { forwardRef } from 'react'
 import reactPropTypes from 'prop-types'
 import clsx from 'clsx'
 import corePropTypes from './prop-types'
-import { OMDbResultType } from '@services/omdb'
+import moviesPropTypes from './movies-prop-types'
 import missingIMDbPosterImage from '../assets/missing-imdb-poster.png'
-
-const movieTypePropType = reactPropTypes.oneOf(Object.values(OMDbResultType))
-
-const postersPropType = reactPropTypes.exact({
-  sx150: reactPropTypes.string,
-  sx300: reactPropTypes.string,
-  sx600: reactPropTypes.string,
-  sx1200: reactPropTypes.string,
-  fullsize: reactPropTypes.string
-})
-
-const moviePropType = reactPropTypes.exact({
-  imdbID: reactPropTypes.string.isRequired,
-  title: reactPropTypes.string.isRequired,
-  type: movieTypePropType.isRequired,
-  year: reactPropTypes.string.isRequired,
-  posterUrls: postersPropType
-})
-
-export const PropTypes = {
-  movieType: movieTypePropType,
-  moviePosters: postersPropType,
-  movie: moviePropType
-}
 
 /**
  * A MovieList referenced component to render a list of movie cards
@@ -65,7 +41,7 @@ export const MovieList = forwardRef(
 )
 
 MovieList.propTypes = {
-  items: reactPropTypes.arrayOf(PropTypes.movie),
+  items: reactPropTypes.arrayOf(moviesPropTypes.movie),
   className: corePropTypes.clsxClassName,
   classNameOnEmpty: corePropTypes.clsxClassName
 }
@@ -108,6 +84,6 @@ export function MovieListItemCard({ data, className }) {
 }
 
 MovieListItemCard.propTypes = {
-  data: PropTypes.movie.isRequired,
+  data: moviesPropTypes.movie.isRequired,
   className: corePropTypes.clsxClassName
 }
