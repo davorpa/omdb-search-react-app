@@ -52,6 +52,7 @@ export const TitleSearchFormInput = forwardRef(
           id={inputId}
           name={name}
           value={value}
+          readOnly={!valueSetter}
           onChange={handleInputOnChange}
           type="text"
           required={required}
