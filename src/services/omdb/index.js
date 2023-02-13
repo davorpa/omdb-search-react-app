@@ -1,4 +1,14 @@
 import { OMDbError } from './OMDbError'
+import titleSearchWithoutResultsResponse from './data/titlesearch/no-results.json'
+
+/**
+ * @enum {string}
+ * @readonly
+ */
+export const OMDbFormatType = Object.freeze({
+  JSON: 'json',
+  XML: 'xml'
+})
 
 /**
  * @enum {string}
@@ -62,35 +72,76 @@ export class OMDbClient {
    * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
    * @returns {Promise<OMDbMoviesDTO>}
    */
-  titleSearch({
+  async titleSearch({
     /** @type {string} */ title,
     /** @type {OMDbResultType=} */ resultType,
     /** @type {string=} */ year,
     /** @type {number=} */ page = 1
   } = {}) {
-    let fileName = Math.random() * 100 > 75 ? 'ok-page-results' : 'no-results'
-    if (title === '') {
-      fileName = 'empty-route-param'
-    } else if (/\s+/.test(title)) {
-      fileName = 'too-many-results'
-    }
+    const requestUrl = new URL(this.#apiUrl)
+    const requestHeaders = new Headers()
+    // configure request
+    this.#setupRequest(requestUrl, requestHeaders)
+    title && requestUrl.searchParams.append('s', title)
+    resultType && requestUrl.searchParams.append('type', resultType)
+    year && requestUrl.searchParams.append('y', year)
+    // execute request
+    const response = await fetch(requestUrl, {
+      method: 'GET',
+      headers: requestHeaders
+    })
+    // parse and make the response DTO mapping
+    const data = await this.#processResponseJSON(response)
+    return Array.from(data?.Search ?? [], titleSearchResultMapper)
+  }
 
-    return import(`./data/titlesearch/${fileName}.json`)
-      .then(({ default: data }) => {
-        /** @type {Array<OMDbMoviesDTO>} */
-        const results = Array.from(
-          /** @type {Array<OMDbMoviesApiDTO>} */
-          data?.Search ?? [],
-          titleSearchResultMapper
-        ).filter((item) => stringCaseInsensitiveContains(item.title, title))
-        if (fileName !== 'no-results' && data.Response === 'False') {
-          throw new OMDbError(data.Error)
-        }
-        return results
-      })
-      .catch((e) => {
-        throw new OMDbError(e.message)
-      })
+  /**
+   *
+   * @protected
+   * @param {URL} url -
+   * @param {Headers} headers -
+   */
+  #setupRequest(/** @type {URL} */ url, /** @type {Headers} */ headers) {
+    url.searchParams.set('apikey', this.#apiKey || '')
+    url.searchParams.set('r', OMDbFormatType.JSON)
+    headers.append('Accept', 'application/json')
+  }
+
+  /**
+   *
+   * @protected
+   * @param {Response} response -
+   * @throws {OMDbError}
+   * @returns {Object}
+   */
+  async #processResponseJSON(/** @type {Response} */ response) {
+    // parse response
+    let data = {}
+    let error = null
+    try {
+      data = await response.json()
+    } catch (e) {
+      error = e
+    }
+    // customize error extracted from parsed response
+    if (data.Error || data.Response === 'False') {
+      if (
+        !stringCaseInsensitiveEquals(
+          data.Error,
+          titleSearchWithoutResultsResponse.Error
+        )
+      ) {
+        throw new OMDbError(
+          `E${response.status}: ${data.Error || response.statusText}`
+        )
+      }
+    }
+    if (!response.ok) {
+      throw new OMDbError(`E${response.status}: ${response.statusText}`)
+    }
+    if (error !== null) throw new OMDbError(error)
+    // return valid response JSON data
+    return data
   }
 }
 
