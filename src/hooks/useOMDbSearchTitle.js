@@ -43,27 +43,35 @@ export const useOMDbSearchTitle = (
   )
 
   const previousSearchParamsRef = useRef(searchParams)
-  const executeSearch = useCallback(() => {
-    if (previousSearchParamsRef.current === searchParams) return
-    setLoading(true)
-    setMessages({}) // clearMessages
+  const executeSearch = useCallback(
+    /**
+     * @param {Object} searchParams
+     * @param {string=} searchParams.title -
+     * @param {number=} searchParams.year -
+     */
+    (searchParams) => {
+      if (previousSearchParamsRef.current === searchParams) return
+      setLoading(true)
+      setMessages({}) // clearMessages
 
-    previousSearchParamsRef.current = searchParams
-    omdbClient
-      .titleSearch({
-        title: searchParams.title,
-        year: searchParams.year
-      })
-      .then((data) => {
-        setSearchResults(data)
-      })
-      .catch((e) => {
-        addMessage('*', e.message)
-      })
-      .finally(() => {
-        setLoading(false)
-      })
-  }, [omdbClient, searchParams, addMessage])
+      previousSearchParamsRef.current = searchParams
+      omdbClient
+        .titleSearch({
+          title: searchParams.title,
+          year: searchParams.year
+        })
+        .then((data) => {
+          setSearchResults(data)
+        })
+        .catch((e) => {
+          addMessage('*', e.message)
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    },
+    [omdbClient, addMessage]
+  )
 
   return {
     searchParams,

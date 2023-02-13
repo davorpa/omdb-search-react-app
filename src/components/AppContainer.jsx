@@ -42,7 +42,7 @@ export function AppContainer() {
     /** @type {import('react').SyntheticEvent} */ event
   ) => {
     event.preventDefault()
-    executeSearch()
+    executeSearch(searchParams)
   }
 
   return (
