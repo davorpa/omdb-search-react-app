@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import { OMDbResultType } from './OMDbResultType'
 import { OMDbError } from './OMDbError'
 import titleSearchWithoutResultsResponse from './data/titlesearch/no-results.json'
 import {
@@ -10,20 +12,9 @@ import {
  * @enum {string}
  * @readonly
  */
-export const OMDbFormatType = Object.freeze({
+const OMDbFormatType = Object.freeze({
   JSON: 'json',
   XML: 'xml'
-})
-
-/**
- * @enum {string}
- * @readonly
- */
-export const OMDbResultType = Object.freeze({
-  MOVIE: 'movie',
-  SERIES: 'series',
-  EPISODE: 'episode',
-  GAME: 'game'
 })
 
 /**
