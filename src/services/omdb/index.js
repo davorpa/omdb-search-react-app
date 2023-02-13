@@ -17,7 +17,8 @@ export const OMDbFormatType = Object.freeze({
 export const OMDbResultType = Object.freeze({
   MOVIE: 'movie',
   SERIES: 'series',
-  EPISODE: 'episode'
+  EPISODE: 'episode',
+  GAME: 'game'
 })
 
 /**
@@ -29,7 +30,7 @@ export const OMDbResultType = Object.freeze({
  * @property {string} imdbID - The ID on https://www.imdb.com/
  * @property {string} Title - The title of movie or series
  * @property {string} Year - The year of release
- * @property {OMDbResultType} Type - The type of result (movie, series, episode...)
+ * @property {OMDbResultType} Type - The type of result (movie, series, episode, game...)
  * @property {string} Poster - The url of the poster
  */
 
@@ -42,7 +43,7 @@ export const OMDbResultType = Object.freeze({
  * @property {string} imdbID - The ID on https://www.imdb.com/
  * @property {string} title - The title of movie or series
  * @property {string} year - The year of release
- * @property {OMDbResultType} type - The type of result (movie, series, episode...)
+ * @property {OMDbResultType} type - The type of result (movie, series, episode, game...)
  * @property {OMDbMoviePostersDTO?} posterUrls - The urls of the movie poster for diverse resolutions
  */
 
@@ -67,7 +68,7 @@ export class OMDbClient {
    * Returns an array of results for a given title
    * @param {Object} searchParams - The params used to look for a result
    * @param {string} searchParams.title - The param that represents the title of movie or series to search in
-   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode...)
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
    * @param {string=} searchParams.year - The param that represents the year of release to search in
    * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
    * @returns {Promise<OMDbMoviesDTO>}
