@@ -7,12 +7,14 @@ import { useOMDbClient } from '@hooks/useOMDbClient'
  *
  * @param {Object} initialSearchParams -
  * @param {string=} initialSearchParams.title -
+ * @param {number=} initialSearchParams.year -
  *
  * @see https://www.omdbapi.com
  */
 export const useOMDbSearchTitle = (
   initialSearchParams = {
-    title: ''
+    title: '',
+    year: undefined
   }
 ) => {
   const [searchParams, setSearchParams] = useState(initialSearchParams)
@@ -46,7 +48,8 @@ export const useOMDbSearchTitle = (
 
     omdbClient
       .titleSearch({
-        title: searchParams.title
+        title: searchParams.title,
+        year: searchParams.year
       })
       .then((data) => {
         setSearchResults(data)
