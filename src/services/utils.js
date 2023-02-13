@@ -9,3 +9,7 @@ export function stringCaseInsensitiveContains(a, b) {
     ? a.toLocaleLowerCase().includes(b.toLocaleLowerCase())
     : a === b
 }
+
+export function stringIsFalse(a) {
+  return typeof a === 'string' ? a.toLocaleLowerCase() === 'false' : a === false
+}

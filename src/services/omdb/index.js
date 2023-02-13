@@ -1,6 +1,10 @@
 import { OMDbError } from './OMDbError'
 import titleSearchWithoutResultsResponse from './data/titlesearch/no-results.json'
-import { stringCaseInsensitiveEquals } from '../utils'
+import {
+  stringCaseInsensitiveContains,
+  stringCaseInsensitiveEquals,
+  stringIsFalse
+} from '../utils'
 
 /**
  * @enum {string}
@@ -49,11 +53,12 @@ export const OMDbResultType = Object.freeze({
  */
 
 /**
- * Represents a simple OMDb API client definition
+ * Represents the OMDb API client interface
  *
- * @see https://www.omdbapi.com
+ * @see http://www.omdbapi.com/swagger.json
+ * @interface
  */
-export class OMDbClient {
+class OMDbAbstractClient {
   #apiUrl = 'https://www.omdbapi.com/'
   #apiKey = ''
 
@@ -65,14 +70,161 @@ export class OMDbClient {
     this.#apiKey = apiKey
   }
 
+  get apiUrl() {
+    return this.#apiUrl
+  }
+
+  get apiKey() {
+    return this.#apiKey
+  }
+
   /**
-   * Returns an array of results for a given title
+   * Returns an array of results for a given title.
+   *
+   * To be implemented by the concrete implementation.
+   *
    * @param {Object} searchParams - The params used to look for a result
    * @param {string} searchParams.title - The param that represents the title of movie or series to search in
    * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
    * @param {string=} searchParams.year - The param that represents the year of release to search in
    * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
-   * @returns {Promise<OMDbMoviesDTO>}
+   * @returns {Promise<Array<OMDbMoviesDTO>>}
+   * @throws {OMDbError} - If the API returns an error
+   * @abstract
+   */
+  titleSearch({
+    /** @type {string} */ title,
+    /** @type {OMDbResultType=} */ resultType,
+    /** @type {string=} */ year,
+    /** @type {number=} */ page = 1
+  } = {}) {
+    throw new Error(
+      'Not implemented. Please implement this abstract method in the concrete implementation'
+    )
+  }
+
+  /**
+   * Returns the details of a result for a given title.
+   *
+   * To be implemented by the concrete implementation.
+   *
+   * @param {Object} searchParams - The params used to look for a result
+   * @param {string} searchParams.title - The param that represents the title of movie or series to fetch details for
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
+   * @param {string=} searchParams.year - The param that represents the year of release to fetch
+   * @param {boolean=} [searchParams.withFullPlot=false] - The param that represents if the full or short plot should be returned
+   * @returns {Promise<OMDbMovieDTO>}
+   * @throws {OMDbError} - If the API returns an error
+   * @abstract
+   */
+  getTitle({
+    /** @type {string} */ title,
+    /** @type {OMDbResultType=} */ resultType,
+    /** @type {string=} */ year,
+    /** @type {boolean=} */ withFullPlot = false
+  } = {}) {
+    throw new Error(
+      'Not implemented. Please implement this abstract method in the concrete implementation'
+    )
+  }
+
+  /**
+   * Returns the details of a result for a given IMDB ID.
+   *
+   * To be implemented by the concrete implementation.
+   *
+   * @param {Object} searchParams - The params used to look for a result
+   * @param {string} searchParams.imdbID - The param that represents the IMDB ID to fetch details for
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
+   * @param {string=} searchParams.year - The param that represents the year of release to fetch
+   * @param {boolean=} [searchParams.withFullPlot=false] - The param that represents if the full or short plot should be returned
+   * @returns {Promise<OMDbMovieDTO>}
+   * @throws {OMDbError} - If the API returns an error
+   * @abstract
+   */
+  getId({
+    /** @type {string} */ imdbID,
+    /** @type {OMDbResultType=} */ resultType,
+    /** @type {string=} */ year,
+    /** @type {boolean=} */ withFullPlot = false
+  } = {}) {
+    throw new Error(
+      'Not implemented. Please implement this abstract method in the concrete implementation'
+    )
+  }
+}
+
+/**
+ * Represents a simple OMDb client implementation that takes some JSON static files as datasource.
+ *
+ * Ideal for mocking purposes.
+ */
+export class OMDbJSONClient extends OMDbAbstractClient {
+  /**
+   * Returns an array of results for a given title.
+   *
+   * @param {Object} searchParams - The params used to look for a result
+   * @param {string} searchParams.title - The param that represents the title of movie or series to search in
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
+   * @param {string=} searchParams.year - The param that represents the year of release to search in
+   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
+   * @returns {Promise<Array<OMDbMoviesDTO>>}
+   * @throws {OMDbError} - If the API returns an error
+   * @override
+   */
+  titleSearch({
+    /** @type {string} */ title,
+    /** @type {OMDbResultType=} */ resultType,
+    /** @type {string=} */ year,
+    /** @type {number=} */ page = 1
+  } = {}) {
+    let filepath = Math.random() * 100 > 85 ? 'ok-page-results' : 'no-results'
+    if (/\s+/.test(this.apiKey)) {
+      filepath = '../no-api-key'
+    } else if (/\s+/.test(this.apiKey) || this.apiKey === '1234') {
+      filepath = '../invalid-api-key'
+    } else if (title === '') {
+      filepath = 'empty-route-param'
+    } else if (/\s+/.test(title)) {
+      filepath = 'too-many-results'
+    }
+
+    return import(`./data/titlesearch/${filepath}.json`)
+      .then(({ default: data }) => {
+        /** @type {Array<OMDbMoviesDTO>} */
+        const results = Array.from(
+          /** @type {Array<OMDbMoviesApiDTO>} */
+          data?.Search ?? [],
+          titleSearchResultMapper
+        ).filter((item) => stringCaseInsensitiveContains(item.title, title))
+        if (filepath !== 'no-results' && stringIsFalse(data.Response)) {
+          throw new OMDbError(data.Error)
+        }
+        return results
+      })
+      .catch((e) => {
+        throw new OMDbError(e.message)
+      })
+  }
+}
+
+/**
+ * Represents a simple OMDb API client implementation
+ *
+ * @see https://www.omdbapi.com
+ */
+export class OMDbClient extends OMDbAbstractClient {
+  /**
+   * Returns an array of results for a given title
+   *
+   * @param {Object} searchParams - The params used to look for a result
+   * @param {string} searchParams.title - The param that represents the title of movie or series to search in
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
+   * @param {string=} searchParams.year - The param that represents the year of release to search in
+   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
+   * @returns {Promise<Array<OMDbMoviesDTO>>}
+   * @throws {OMDbError} - If the API returns an error
+   * @override
    */
   async titleSearch({
     /** @type {string} */ title,
@@ -80,7 +232,7 @@ export class OMDbClient {
     /** @type {string=} */ year,
     /** @type {number=} */ page = 1
   } = {}) {
-    const requestUrl = new URL(this.#apiUrl)
+    const requestUrl = new URL(this.apiUrl)
     const requestHeaders = new Headers()
     // configure request
     this.#setupRequest(requestUrl, requestHeaders)
@@ -104,7 +256,7 @@ export class OMDbClient {
    * @param {Headers} headers -
    */
   #setupRequest(/** @type {URL} */ url, /** @type {Headers} */ headers) {
-    url.searchParams.set('apikey', this.#apiKey || '')
+    url.searchParams.set('apikey', this.apiKey || '')
     url.searchParams.set('r', OMDbFormatType.JSON)
     headers.append('Accept', 'application/json')
   }
@@ -126,7 +278,7 @@ export class OMDbClient {
       error = e
     }
     // customize error extracted from parsed response
-    if (data.Error || data.Response === 'False') {
+    if (stringIsFalse(data.Response) || data.Error) {
       if (
         !stringCaseInsensitiveEquals(
           data.Error,
