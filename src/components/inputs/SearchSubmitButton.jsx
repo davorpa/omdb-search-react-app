@@ -5,21 +5,24 @@ import { GoSearch } from 'react-icons/go'
 import corePropTypes from '../prop-types'
 
 /**
- *
+ * A SearchSubmitButton React component
  */
 export const SearchSubmitButton = forwardRef(
   /**
    *
    * @param {Object} props -
+   * @param {string=} props.formId -
+   *      The html id of the form that this input is a part of
    * @param {string|string[]=} props.className -
    * @param {boolean=} [props.loading=false] -
    * @param {import('react').ForwardedRef<*>=} ref -
    *      A `React.useRef` reference to hook this wrapped input
    * @returns {JSX.Element} -
-   */ ({ className, loading = false }, ref) => {
+   */ ({ formId, className, loading = false }, ref) => {
     return (
       <button
         ref={ref}
+        form={formId}
         type="submit"
         className={clsx(loading && 'busy', className)}
       >
@@ -31,6 +34,7 @@ export const SearchSubmitButton = forwardRef(
 )
 
 SearchSubmitButton.propTypes = {
+  formId: reactPropTypes.string,
   className: corePropTypes.clsxClassName,
   loading: reactPropTypes.bool
 }

@@ -11,6 +11,8 @@ import OMDbResultType from '@services/omdb/OMDbResultType'
 export const TypeSearchFormSelectInput = forwardRef(
   /**
    * @param {Object} props -
+   * @param {string=} props.formId -
+   *      The html id of the form that this input is a part of
    * @param {string=} [props.name="title"] -
    * @param {any=} props.value -
    * @param {Function=} props.valueSetter
@@ -24,6 +26,7 @@ export const TypeSearchFormSelectInput = forwardRef(
    */
   (
     {
+      formId,
       name = 'type',
       value,
       valueSetter,
@@ -57,6 +60,7 @@ export const TypeSearchFormSelectInput = forwardRef(
         <select
           ref={ref}
           id={inputId}
+          form={formId}
           name={name}
           value={value}
           onChange={handleInputOnChange}
@@ -78,6 +82,7 @@ export const TypeSearchFormSelectInput = forwardRef(
 )
 
 TypeSearchFormSelectInput.propTypes = {
+  formId: reactPropTypes.string,
   name: reactPropTypes.string,
   value: reactPropTypes.any,
   valueSetter: reactPropTypes.func,

@@ -9,6 +9,8 @@ import corePropTypes from '../prop-types'
 export const TitleSearchFormInput = forwardRef(
   /**
    * @param {Object} props -
+   * @param {string=} props.formId -
+   *      The html id of the form that this input is a part of
    * @param {string=} [props.name="title"] -
    * @param {any=} props.value -
    * @param {Function=} props.valueSetter
@@ -22,6 +24,7 @@ export const TitleSearchFormInput = forwardRef(
    */
   (
     {
+      formId,
       name = 'title',
       value,
       valueSetter,
@@ -50,6 +53,7 @@ export const TitleSearchFormInput = forwardRef(
         <input
           ref={ref}
           id={inputId}
+          form={formId}
           name={name}
           value={value}
           readOnly={!valueSetter}
@@ -64,6 +68,7 @@ export const TitleSearchFormInput = forwardRef(
 )
 
 TitleSearchFormInput.propTypes = {
+  formId: reactPropTypes.string,
   name: reactPropTypes.string,
   value: reactPropTypes.any,
   valueSetter: reactPropTypes.func,
