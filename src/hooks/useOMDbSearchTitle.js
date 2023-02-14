@@ -4,7 +4,7 @@ import { stringCaseInsensitiveCompare } from '@services/utils'
 
 const defaultSearchParams = {
   title: '',
-  year: undefined,
+  year: '',
   type: ''
 }
 
