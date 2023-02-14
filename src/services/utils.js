@@ -4,6 +4,12 @@ export function stringCaseInsensitiveEquals(a, b) {
     : a === b
 }
 
+export function stringCaseInsensitiveCompare(a, b) {
+  return typeof a === 'string' && typeof b === 'string'
+    ? a.localeCompare(b, undefined, { sensitivity: 'base', numeric: true })
+    : a - b
+}
+
 export function stringCaseInsensitiveContains(a, b) {
   return typeof a === 'string' && typeof b === 'string'
     ? a.toLocaleLowerCase().includes(b.toLocaleLowerCase())

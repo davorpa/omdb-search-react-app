@@ -21,7 +21,7 @@ Primera iteración:
 Segunda iteración:
 
 - [x] Busca por los demás campos que permite la API.
-- [ ] Haz que se pueda ordenar por alguno de los campos. (ej. titulo).
+- [x] Haz que se pueda ordenar por alguno de los campos. (ej. titulo).
 
 ---
 

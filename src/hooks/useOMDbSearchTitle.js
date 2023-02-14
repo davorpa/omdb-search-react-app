@@ -1,5 +1,12 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { useOMDbClient } from '@hooks/useOMDbClient'
+import { stringCaseInsensitiveCompare } from '@services/utils'
+
+const defaultSearchParams = {
+  title: '',
+  year: undefined,
+  type: ''
+}
 
 /**
  * React Hook to interact with the results returned by
@@ -9,16 +16,19 @@ import { useOMDbClient } from '@hooks/useOMDbClient'
  * @param {string=} initialSearchParams.title -
  * @param {number=} initialSearchParams.year -
  * @param {string=} initialSearchParams.type -
+ * @param {string=} [sortBy="title"] - The property key to sort the results by.
  *
  * @see https://www.omdbapi.com
  */
 export const useOMDbSearchTitle = (
-  initialSearchParams = {
-    title: '',
-    year: undefined,
-    type: ''
-  }
+  initialSearchParams = defaultSearchParams,
+  sortBy
 ) => {
+  initialSearchParams = Object.assign(
+    {},
+    defaultSearchParams,
+    initialSearchParams
+  ) // Ensure each defaults are set
   const [searchParams, setSearchParams] = useState(initialSearchParams)
   const [messages, setMessages] = useState({}) // no error messages
   const [results, setSearchResults] = useState([])
@@ -78,11 +88,18 @@ export const useOMDbSearchTitle = (
     [omdbClient, addMessage]
   )
 
+  const processedResults = useMemo(() => {
+    if (!sortBy) return results
+    return [...results].sort((a, b) =>
+      stringCaseInsensitiveCompare(a[sortBy], b[sortBy])
+    )
+  }, [results, sortBy])
+
   return {
     searchParams,
     updateSearchParam,
     loading,
-    results,
+    results: processedResults,
     executeSearch,
     messages
   }

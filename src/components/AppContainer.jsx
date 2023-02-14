@@ -1,8 +1,9 @@
-import { useId, useRef, useEffect } from 'react'
+import { useId, useRef, useEffect, useState } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { YearSearchFormInput } from '@components/inputs/YearSearchFormInput'
 import { TypeSearchFormSelectInput } from '@components/inputs/TypeSearchFormSelectInput'
+import { SortByMovieFieldsRadioGroup } from '@components/inputs/SortByMovieFieldsRadioGroup'
 import { MovieList } from '@components/movies'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
@@ -11,6 +12,7 @@ import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
  */
 export function AppContainer() {
   const containerId = useId()
+  const [sortBy, setSortBy] = useState('') // None
   const {
     searchParams,
     updateSearchParam,
@@ -18,7 +20,7 @@ export function AppContainer() {
     results: movies,
     executeSearch,
     messages
-  } = useOMDbSearchTitle()
+  } = useOMDbSearchTitle(null, sortBy)
   const searchResultsLayerRef = useRef(null)
   const titleSearchFormInputRef = useRef(null)
 
@@ -43,7 +45,7 @@ export function AppContainer() {
     /** @type {import('react').SyntheticEvent} */ event
   ) => {
     event.preventDefault()
-    executeSearch(searchParams)
+    executeSearch(searchParams, sortBy)
   }
 
   return (
@@ -52,6 +54,7 @@ export function AppContainer() {
         <div className="message danger">{messages['*']}</div>
       )}
       <form
+        id={containerId}
         action={'#' + containerId + '-results'}
         className="form-input-container omdb-search-form"
         onSubmit={handleSearchFormSubmit}
@@ -91,7 +94,23 @@ export function AppContainer() {
         id={containerId + '-results'}
         className="omdb-search-results"
       >
+        {!!movies?.length && (
+          <SortByMovieFieldsRadioGroup
+            formId={containerId}
+            className="omdb-sort-by"
+            value={sortBy}
+            valueSetter={setSortBy}
+          />
+        )}
         <MovieList items={movies} className="grid fluid-cols no-bullets" />
+        {!!movies?.length && (
+          <SortByMovieFieldsRadioGroup
+            formId={containerId}
+            className="omdb-sort-by"
+            value={sortBy}
+            valueSetter={setSortBy}
+          />
+        )}
       </main>
     </>
   )
