@@ -67,6 +67,7 @@ export function AppContainer() {
           ref={titleSearchFormInputRef}
           className="omdb-search-title col-1/1"
           required
+          requestSubmitOnValueChange
         />
 
         <YearSearchFormInput
