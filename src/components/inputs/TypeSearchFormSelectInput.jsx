@@ -58,16 +58,15 @@ export const TypeSearchFormSelectInput = forwardRef(
           ref={ref}
           id={inputId}
           name={name}
+          value={value}
           onChange={handleInputOnChange}
           required={required}
           placeholder={placeholder}
         >
-          <option value="" selected={!value}>
-            Any
-          </option>
+          <option value="">Any</option>
           <optgroup label="= Values =">
             {Object.values(OMDbResultType).map((type) => (
-              <option key={type} value={type} selected={value === type}>
+              <option key={type} value={type}>
                 {stringToTitleCase(type)}
               </option>
             ))}
