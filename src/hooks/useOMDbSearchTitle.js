@@ -1,4 +1,5 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
+import getProperty from 'just-safe-get'
 import { useOMDbClient } from '@hooks/useOMDbClient'
 import { stringCaseInsensitiveCompare } from '@services/utils'
 
@@ -91,7 +92,10 @@ export const useOMDbSearchTitle = (
   const processedResults = useMemo(() => {
     if (!sortBy) return results
     return [...results].sort((a, b) =>
-      stringCaseInsensitiveCompare(a[sortBy], b[sortBy])
+      stringCaseInsensitiveCompare(
+        getProperty(a, sortBy),
+        getProperty(b, sortBy)
+      )
     )
   }, [results, sortBy])
 
