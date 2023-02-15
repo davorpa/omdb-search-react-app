@@ -1,15 +1,15 @@
-import { OMDbClientContext, omdbClient } from '@/context'
+import { OMDbClientContextProvider } from '@context/omdb/client'
 import { AppContainer } from '@components/AppContainer'
 import './App.css'
 
 function App() {
   return (
-    <OMDbClientContext.Provider value={omdbClient}>
+    <OMDbClientContextProvider>
       <div className="App">
         <h1>OMDB Search</h1>
         <AppContainer />
       </div>
-    </OMDbClientContext.Provider>
+    </OMDbClientContextProvider>
   )
 }
 

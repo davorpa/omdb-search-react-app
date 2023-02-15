@@ -18,6 +18,7 @@ export default defineConfig({
     alias: {
       '@': srcAliasOf(),
       '@components': srcAliasOf('components'),
+      '@context': srcAliasOf('context'),
       '@hooks': srcAliasOf('hooks'),
       '@services': srcAliasOf('services')
     }

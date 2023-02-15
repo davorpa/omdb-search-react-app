@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { OMDbClientContext } from '@/context'
+import { OMDbClientContext } from '@context/omdb/client'
 
 /**
  * A React Hook to gain access over the OMDbClientContext
@@ -11,5 +11,10 @@ import { OMDbClientContext } from '@/context'
 export const useOMDbClient = () => {
   /** @type {import('../services/omdb').OMDbClient} */
   const client = useContext(OMDbClientContext)
+  if (client === undefined) {
+    throw new Error(
+      'useOMDbClient custom hook must be used within a OMDbClientContextProvider'
+    )
+  }
   return client
 }
