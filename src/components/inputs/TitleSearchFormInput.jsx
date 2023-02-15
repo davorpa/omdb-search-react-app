@@ -11,7 +11,7 @@ export const TitleSearchFormInput = forwardRef(
   /**
    * @param {Object} props -
    * @param {string=} props.formId -
-   *      The html id of the form that this input is a part of
+   *      The HTML id of the form that this input is a part of
    * @param {string=} [props.name="title"] -
    * @param {any=} props.value -
    * @param {Function=} props.valueSetter -
@@ -23,8 +23,13 @@ export const TitleSearchFormInput = forwardRef(
    * @param {Function=} props.onValueChange -
    *      A callback function that receives the event as argument.
    *      It will be called when the value changes
-   * @param {boolean=} [props.requestSubmitOnValueChange=false] -
-   *      Experimental. If true, the form will be submitted when the value changes
+   * @param {boolean|string=} [props.requestSubmitOnValueChange=false] -
+   *      Experimental!! for uncontrolled components.
+   *      - If true, the form will be submitted when the value changes
+   *      - If "debounce", the form will be submitted after some debounce
+   *        timeout when the value changes
+   *      - If "debounce-immediate" the form will be submitted the first time
+   *        and also after some debounce timeout when the value changes
    * @param {import('react').ForwardedRef<*>=} ref -
    *      A `React.useRef` reference to hook this wrapped input
    * @returns {JSX.Element}
@@ -90,5 +95,5 @@ TitleSearchFormInput.propTypes = {
   required: reactPropTypes.bool,
   placeholder: reactPropTypes.string,
   onValueChange: reactPropTypes.func,
-  requestSubmitOnValueChange: reactPropTypes.bool
+  requestSubmitOnValueChange: corePropTypes.requestSubmitOnValueChange
 }

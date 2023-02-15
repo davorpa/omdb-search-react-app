@@ -22,9 +22,18 @@ const clsxClassNamePropType = reactPropTypes.oneOfType([
   reactPropTypes.objectOf(stringNumberOrBoolPropType)
 ])
 
+const requestSubmitOnValueChangePropType = reactPropTypes.oneOf([
+  false,
+  true,
+  'immediate',
+  'debounce',
+  'debounce-immediate'
+])
+
 export default {
   stringOrNumber: stringOrNumberPropType,
   stringOrBool: stringOrBoolPropType,
   stringNumberOrBool: stringNumberOrBoolPropType,
-  clsxClassName: clsxClassNamePropType
+  clsxClassName: clsxClassNamePropType,
+  requestSubmitOnValueChange: requestSubmitOnValueChangePropType
 }

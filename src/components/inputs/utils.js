@@ -1,3 +1,5 @@
+import debounce from 'just-debounce-it'
+
 /**
  * Internal utility function to handle the OnChange event of any component.
  *
@@ -5,22 +7,30 @@
  * @param {import('react').SyntheticEvent} param0.event -
  *     The event object received by the onChange handler of the target component
  * @param {Function=} param0.valueSetter -
- *      A callback function that receives the new/setted value as argument.
+ *     A callback function that receives the new/setted value as argument.
  * @param {Function=} param0.onValueChange -
- *      A callback function that receives the event as argument.
- *      It will be called when the value changes
- * @param {boolean=} [param0.requestSubmitOnValueChange=false] -
- *      Experimental!! for uncontrolled components.
- *      If true, the form will be submitted when the value changes
+ *     A callback function that receives the event as argument.
+ *     It will be called when the value changes
+ * @param {boolean|string=} [param0.requestSubmitOnValueChange=false] -
+ *     Experimental!! for uncontrolled components.
+ *     - If true, the form will be submitted when the value changes
+ *     - If "debounce", the form will be submitted after some debounce
+ *       timeout when the value changes
+ *     - If "debounce-immediate" the form will be submitted the first time
+ *       and also after some debounce timeout when the value changes
+ * @param {number=} [param0.debounceWaitMillis=600] -
+ *     The debounce timeout in milliseconds
  */
 export async function handleComponentInputOnChange({
   event,
   valueSetter,
   onValueChange,
-  requestSubmitOnValueChange = false
+  requestSubmitOnValueChange = false,
+  debounceWaitMillis = 600
 }) {
   const input = event.target
   // Bind and validate the input value
+  // adding async/sync support
   let valid = true
   try {
     valueSetter &&
@@ -38,10 +48,17 @@ export async function handleComponentInputOnChange({
     !event.isDefaultPrevented() &&
     input.form
   ) {
+    // select invoke strategy
+    let { requestSubmit } = input.form
+    typeof requestSubmitOnValueChange === 'string' &&
+      requestSubmitOnValueChange.startsWith('debounce') &&
+      (requestSubmit = debounce(
+        requestSubmit,
+        debounceWaitMillis,
+        requestSubmitOnValueChange === 'debounce-immediate'
+      ))
     // queue the form submit to the next tick
-    // so that the controlled value has time to be updated first
-    setTimeout(() => {
-      input.form.requestSubmit()
-    }, 0)
+    // so that controlled value has time to be updated first
+    setTimeout(requestSubmit.bind(input.form), 0)
   }
 }
