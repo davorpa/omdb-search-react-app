@@ -40,6 +40,8 @@ export async function handleComponentInputOnChange({
   ) {
     // queue the form submit to the next tick
     // so that the controlled value has time to be updated first
-    setTimeout(() => {}, input.form.requestSubmit(), 0)
+    setTimeout(() => {
+      input.form.requestSubmit()
+    }, 0)
   }
 }
