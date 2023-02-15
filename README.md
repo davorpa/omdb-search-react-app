@@ -35,7 +35,7 @@ npm create vite@latest omdb-search-react-app --template react-swc
 
 To begin developing this project...
 
-1. Request for an API key using [the following form](https://www.omdbapi.com/apikey.aspx) and create an `env.local` file using `env.example` file.
+1. Request for an API key using [the following form](https://www.omdbapi.com/apikey.aspx) and create an `.env.local` file using `.env.example` file.
 
     ```properties
     VITE_OMDB_APIKEY="<Your API key>"
