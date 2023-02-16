@@ -49,16 +49,19 @@ export async function handleComponentInputOnChange({
     input.form
   ) {
     // select invoke strategy
-    let { requestSubmit } = input.form
-    typeof requestSubmitOnValueChange === 'string' &&
-      requestSubmitOnValueChange.startsWith('debounce') &&
-      (requestSubmit = debounce(
-        requestSubmit,
+    const needsDebouncing =
+      typeof requestSubmitOnValueChange === 'string' &&
+      requestSubmitOnValueChange.startsWith('debounce')
+    if (needsDebouncing) {
+      debounce(
+        input.form.requestSubmit,
         debounceWaitMillis,
         requestSubmitOnValueChange === 'debounce-immediate'
-      ))
-    // queue the form submit to the next tick
-    // so that controlled value has time to be updated first
-    setTimeout(requestSubmit.bind(input.form), 0)
+      ).bind(input.form)()
+    } else {
+      // queue the form submit to the next tick
+      // so that controlled value has time to be updated first
+      setTimeout(input.form.requestSubmit.bind(input.form), 0)
+    }
   }
 }
