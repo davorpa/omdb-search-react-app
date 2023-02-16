@@ -1,0 +1,69 @@
+
+name: CI
+
+on:                     # This pipeline is executed when:
+  push:                 # - A push event is fired
+    branches:           #   over this branches
+      - main
+    
+  pull_request:         # - A pull request
+    branches:           #   over this base branches
+      - main
+    types:              #   is...
+      - opened          #   submitted
+      - synchronize     #   or push more commits
+      - reopened        #   or reopened after closed (no merged)
+
+permissions:
+  # needed to checkouts/branching
+  contents: read
+
+# This allows a subsequently queued workflow run to interrupt/wait for previous runs
+concurrency:
+  group: '${{ github.workflow }}'
+  cancel-in-progress: true  # true: interrupt, false = wait for
+
+jobs:
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          # cache: 'npm'
+      - name: Install dependencies
+        run: |
+          npm install --no-fund --no-audit
+      - name: Run code linter
+        run: |
+          npm run lint
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          # cache: 'npm'
+      - name: Install dependencies
+        run: |
+          npm install --no-fund --no-audit
+      - name: Run webapp builder
+        run: |
+          npm run build
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-${{ github.run_id }}
+          path: dist

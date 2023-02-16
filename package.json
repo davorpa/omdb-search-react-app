@@ -62,6 +62,7 @@
     }
   },
   "eslintIgnore": [
+    "node_modules/",
     "dist/**",
     "dist-ssr/**"
   ],
