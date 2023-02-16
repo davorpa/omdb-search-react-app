@@ -65,7 +65,7 @@ jobs:
       - name: Upload dist artifact
         uses: actions/upload-artifact@v3
         with:
-          name: dist-${{ github.run_id }}
+          name: ${{ github.event.repository.name }}-dist-${{ github.run_id }}
           path: dist
 
   generate-docs:
@@ -90,5 +90,5 @@ jobs:
       - name: Upload docs artifact
         uses: actions/upload-artifact@v3
         with:
-          name: docs-${{ github.run_id }}
+          name: ${{ github.event.repository.name }}-docs-${{ github.run_id }}
           path: docs
