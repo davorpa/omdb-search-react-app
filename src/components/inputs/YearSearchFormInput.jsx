@@ -6,6 +6,7 @@ import { handleComponentInputOnChange } from './utils'
 
 /**
  * A YearSearchFormInput React component
+ * @returns {import('react').FunctionComponent}
  */
 export const YearSearchFormInput = forwardRef(
   /**
@@ -84,6 +85,8 @@ export const YearSearchFormInput = forwardRef(
     )
   }
 )
+
+YearSearchFormInput.displayName = 'YearSearchFormInput'
 
 YearSearchFormInput.propTypes = {
   formId: reactPropTypes.string,

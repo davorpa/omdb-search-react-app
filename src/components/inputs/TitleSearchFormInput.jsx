@@ -6,6 +6,7 @@ import { handleComponentInputOnChange } from './utils'
 
 /**
  * A TitleSearchFormInput React component
+ * @returns {import('react').FunctionComponent}
  */
 export const TitleSearchFormInput = forwardRef(
   /**
@@ -84,6 +85,8 @@ export const TitleSearchFormInput = forwardRef(
     )
   }
 )
+
+TitleSearchFormInput.displayName = 'TitleSearchFormInput'
 
 TitleSearchFormInput.propTypes = {
   formId: reactPropTypes.string,

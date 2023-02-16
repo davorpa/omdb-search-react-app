@@ -6,6 +6,7 @@ import { handleComponentInputOnChange } from './utils'
 
 /**
  * A SortByMovieFieldsRadioGroup React component
+ * @returns {import('react').FunctionComponent}
  */
 export const SortByMovieFieldsRadioGroup = forwardRef(
   /**
@@ -90,6 +91,8 @@ export const SortByMovieFieldsRadioGroup = forwardRef(
     )
   }
 )
+
+SortByMovieFieldsRadioGroup.displayName = 'SortByMovieFieldsRadioGroup'
 
 SortByMovieFieldsRadioGroup.propTypes = {
   formId: reactPropTypes.string,

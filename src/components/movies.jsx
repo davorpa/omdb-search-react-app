@@ -8,6 +8,7 @@ import missingIMDbPosterImage from '../assets/missing-imdb-poster.png'
 /**
  * A MovieList referenced component to render a list of movie cards
  * @see MovieListItemCard
+ * @returns {import('react').FunctionComponent}
  */
 export const MovieList = forwardRef(
   /**
@@ -43,6 +44,8 @@ export const MovieList = forwardRef(
   }
 )
 
+MovieList.displayName = 'MovieList'
+
 MovieList.propTypes = {
   items: reactPropTypes.arrayOf(moviesPropTypes.movie),
   className: corePropTypes.clsxClassName,
@@ -54,7 +57,7 @@ MovieList.propTypes = {
  * @param {Object} props -
  * @param {import('../services/omdb').OMDbMoviesDTO} props.data -
  * @param {string|string[]=} props.className -
- * @returns {JSX.Element}
+ * @returns {import('react').FunctionComponent}
  */
 export function MovieListItemCard({ data, className }) {
   const { imdbID, title, year, type, posterUrls } = data

@@ -8,6 +8,7 @@ import OMDbResultType from '@services/omdb/OMDbResultType'
 
 /**
  * A TypeSearchFormSelectInput React component
+ * @returns {import('react').FunctionComponent}
  */
 export const TypeSearchFormSelectInput = forwardRef(
   /**
@@ -93,6 +94,8 @@ export const TypeSearchFormSelectInput = forwardRef(
     )
   }
 )
+
+TypeSearchFormSelectInput.displayName = 'TypeSearchFormSelectInput'
 
 TypeSearchFormSelectInput.propTypes = {
   formId: reactPropTypes.string,

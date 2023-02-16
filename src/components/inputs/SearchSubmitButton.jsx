@@ -6,6 +6,7 @@ import corePropTypes from '../prop-types'
 
 /**
  * A SearchSubmitButton React component
+ * @returns {import('react').FunctionComponent}
  */
 export const SearchSubmitButton = forwardRef(
   /**
@@ -32,6 +33,8 @@ export const SearchSubmitButton = forwardRef(
     )
   }
 )
+
+SearchSubmitButton.displayName = 'SearchSubmitButton'
 
 SearchSubmitButton.propTypes = {
   formId: reactPropTypes.string,
