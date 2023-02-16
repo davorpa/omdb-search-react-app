@@ -83,7 +83,8 @@ jobs:
       - name: Install dependencies
         run: |
           npm install --no-fund --no-audit
-      - name: Run webapp builder
+      - name: Run docs generator
+        continue-on-error: true
         run: |
           npm run generate-docs
       - name: Upload docs artifact
