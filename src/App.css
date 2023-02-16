@@ -4,6 +4,7 @@
 
 :root {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -11,7 +12,7 @@ body {
   flex-direction: column;
   align-content: center;
   min-width: 320px;
-  min-height: calc(100vh - 40px);
+  height: calc(100vh - 40px);
 }
 
 #root {
@@ -21,9 +22,13 @@ body {
   padding: 1rem;
 }
 
+a svg, a img,
 button svg, button img {
   display: inline-block;
   vertical-align: middle;
+}
+
+button svg, button img {
   margin: 0 6px;
 }
 
@@ -31,9 +36,33 @@ input[type=number] {
   text-align: right;
 }
 
+/* ==============================
+        APP
+ */
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.App {
+  flex: 1 0 auto;
+}
+
 .App h1 {
   text-align: center;
   margin-top: 0;
+}
+
+.App-footer {
+  flex-shrink: 0;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.App-footer p {
+  margin: 12px auto;
 }
 
 /* ==============================
