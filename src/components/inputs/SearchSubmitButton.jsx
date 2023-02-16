@@ -18,7 +18,7 @@ export const SearchSubmitButton = forwardRef(
    * @param {boolean=} [props.loading=false] -
    * @param {import('react').ForwardedRef<*>=} ref -
    *      A `React.useRef` reference to hook this wrapped input
-   * @returns {JSX.Element} -
+   * @returns {import('react').FunctionComponent}
    */ ({ formId, className, loading = false }, ref) => {
     return (
       <button

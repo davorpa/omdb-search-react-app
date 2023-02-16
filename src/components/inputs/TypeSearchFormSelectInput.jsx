@@ -30,7 +30,7 @@ export const TypeSearchFormSelectInput = forwardRef(
    *      Experimental. If true, the form will be submitted when the value changes
    * @param {import('react').ForwardedRef<*>=} ref -
    *      A `React.useRef` reference to hook this wrapped input
-   * @returns {JSX.Element}
+   * @returns {import('react').FunctionComponent}
    */
   (
     {

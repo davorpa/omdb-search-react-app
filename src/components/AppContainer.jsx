@@ -8,7 +8,7 @@ import { MovieList } from '@components/movies'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
 /**
- * @returns {JSX.Element}
+ * @returns {import('react').FunctionComponent}
  */
 export function AppContainer() {
   const containerId = useId()

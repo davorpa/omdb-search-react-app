@@ -19,7 +19,7 @@ export const MovieList = forwardRef(
    * @param {string|string[]=} [props.classNameOnEmpty="no-results"] -
    * @param {import('react').ForwardedRef<*>=} ref -
    *      A `React.useRef` reference to hook this wrapped input
-   * @returns {JSX.Element}
+   * @returns {import('react').FunctionComponent}
    */ ({ items, className, classNameOnEmpty = 'no-results' }, ref) => {
     const itemsLength = items?.length || 0
     const hasItems = itemsLength > 0

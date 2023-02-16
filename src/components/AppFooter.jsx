@@ -1,5 +1,8 @@
 import { GoMarkGithub } from 'react-icons/go'
 
+/**
+ * @returns {import('react').FunctionComponent}
+ */
 export default function AppFooter() {
   return (
     <footer className="App-footer">

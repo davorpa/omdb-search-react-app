@@ -33,7 +33,7 @@ export const TitleSearchFormInput = forwardRef(
    *        and also after some debounce timeout when the value changes
    * @param {import('react').ForwardedRef<*>=} ref -
    *      A `React.useRef` reference to hook this wrapped input
-   * @returns {JSX.Element}
+   * @returns {import('react').FunctionComponent}
    */
   (
     {
