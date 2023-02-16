@@ -33,7 +33,7 @@
     "vite": "4.1.1"
   },
   "overrides": {
-    "esquery": "1.4.0"
+    "esquery": "1.4.2"
   },
   "eslintConfig": {
     "env": {
