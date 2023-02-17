@@ -5,18 +5,28 @@ import { GoSearch } from 'react-icons/go'
 import corePropTypes from '../prop-types'
 
 /**
- * A SearchSubmitButton React component
+ * `SearchSubmitButton` is a React component that renders a button
+ * which submits a form that executes the search.
+ *
+ * @function SearchSubmitButton
+ * @memberof module:components
+ * @param {Object} props -
+ * @param {string=} props.formId -
+ *      The html id of the form that this input is a part of
+ * @param {(string|string[])=} props.className -
+ * @param {boolean=} [props.loading=false] -
+ * @param {import('react').ForwardedRef=} ref -
+ *      A `React.useRef` reference to hook this wrapped input
  * @returns {import('react').FunctionComponent}
  */
 export const SearchSubmitButton = forwardRef(
   /**
-   *
    * @param {Object} props -
    * @param {string=} props.formId -
    *      The html id of the form that this input is a part of
-   * @param {string|string[]=} props.className -
+   * @param {(string|string[])=} props.className -
    * @param {boolean=} [props.loading=false] -
-   * @param {import('react').ForwardedRef<*>=} ref -
+   * @param {import('react').ForwardedRef=} ref -
    *      A `React.useRef` reference to hook this wrapped input
    * @returns {import('react').FunctionComponent}
    */ ({ formId, className, loading = false }, ref) => {

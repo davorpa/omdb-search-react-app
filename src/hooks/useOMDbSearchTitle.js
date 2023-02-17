@@ -13,12 +13,14 @@ const defaultSearchParams = {
  * React Hook to interact with the results returned by
  * the OMDb API `searchTitle` endpoint invocation.
  *
+ * @function useOMDbSearchTitle
  * @param {Object} initialSearchParams -
  * @param {string=} initialSearchParams.title -
  * @param {number=} initialSearchParams.year -
  * @param {string=} initialSearchParams.type -
  * @param {string=} [sortBy="title"] - The property key to sort the results by.
  *
+ * @memberof module:hooks
  * @see https://www.omdbapi.com
  */
 export const useOMDbSearchTitle = (

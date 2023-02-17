@@ -5,7 +5,32 @@ import corePropTypes from '../prop-types'
 import { handleComponentInputOnChange } from './utils'
 
 /**
- * A YearSearchFormInput React component
+ * `YearSearchFormInput` React components render an input field to search by year
+ * in a movie list view component (e.g. `MovieList`)
+ *
+ * @function YearSearchFormInput
+ * @memberof module:components
+ * @param {Object} props -
+ * @param {string=} props.formId -
+ *      The HTML id of the form that this input is a part of
+ * @param {string=} [props.name="year"] -
+ * @param {any=} props.value -
+ * @param {Function=} props.valueSetter -
+ * @param {string=} [props.labelText="Year"] -
+ * @param {(string|string[])=} props.className -
+ * @param {boolean=} [props.required=false] -
+ * @param {Function=} props.onValueChange -
+ *      A callback function that receives the event as argument.
+ *      It will be called when the value changes
+ * @param {boolean|string=} [props.requestSubmitOnValueChange=false] -
+ *      Experimental!! for uncontrolled components.
+ *      - If true, the form will be submitted when the value changes
+ *      - If "debounce", the form will be submitted after some debounce
+ *        timeout when the value changes
+ *      - If "debounce-immediate" the form will be submitted the first time
+ *        and also after some debounce timeout when the value changes
+ * @param {import('react').ForwardedRef=} ref -
+ *      A `React.useRef` reference to hook this wrapped input
  * @returns {import('react').FunctionComponent}
  */
 export const YearSearchFormInput = forwardRef(
@@ -17,7 +42,7 @@ export const YearSearchFormInput = forwardRef(
    * @param {any=} props.value -
    * @param {Function=} props.valueSetter -
    * @param {string=} [props.labelText="Year"] -
-   * @param {string|string[]=} props.className -
+   * @param {(string|string[])=} props.className -
    * @param {boolean=} [props.required=false] -
    * @param {Function=} props.onValueChange -
    *      A callback function that receives the event as argument.
@@ -29,7 +54,7 @@ export const YearSearchFormInput = forwardRef(
    *        timeout when the value changes
    *      - If "debounce-immediate" the form will be submitted the first time
    *        and also after some debounce timeout when the value changes
-   * @param {import('react').ForwardedRef<*>=} ref -
+   * @param {import('react').ForwardedRef=} ref -
    *      A `React.useRef` reference to hook this wrapped input
    * @returns {import('react').FunctionComponent}
    **/

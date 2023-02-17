@@ -6,18 +6,25 @@ import moviesPropTypes from './movies-prop-types'
 import missingIMDbPosterImage from '../assets/missing-imdb-poster.png'
 
 /**
- * A MovieList referenced component to render a list of movie cards
- * @see MovieListItemCard
+ * The `MovieList` referenced React component renders a list of movie cards
+ * or a message if no movies are provided.
+ *
+ * @function MovieList
+ * @memberof module:components
+ * @param {Object} props -
+ * @param {import('../services/omdb').OMDbMoviesDTO[]} props.items -
+ * @param {(string|string[])=} props.className -
+ * @param {(string|string[])=} [props.classNameOnEmpty="no-results"] -
  * @returns {import('react').FunctionComponent}
+ * @see module:components.MovieListItemCard
  */
 export const MovieList = forwardRef(
   /**
-   *
    * @param {Object} props -
-   * @param {Array<import('../services/omdb').OMDbMoviesDTO>} props.items -
-   * @param {string|string[]=} props.className -
-   * @param {string|string[]=} [props.classNameOnEmpty="no-results"] -
-   * @param {import('react').ForwardedRef<*>=} ref -
+   * @param {import('../services/omdb').OMDbMoviesDTO[]} props.items -
+   * @param {(string|string[])=} props.className -
+   * @param {(string|string[])=} [props.classNameOnEmpty="no-results"] -
+   * @param {import('react').ForwardedRef=} ref -
    *      A `React.useRef` reference to hook this wrapped input
    * @returns {import('react').FunctionComponent}
    */ ({ items, className, classNameOnEmpty = 'no-results' }, ref) => {
@@ -53,10 +60,13 @@ MovieList.propTypes = {
 }
 
 /**
+ * MovieListItemCard referenced components render a movie as a card
  *
+ * @function MovieListItemCard
+ * @memberof module:components
  * @param {Object} props -
  * @param {import('../services/omdb').OMDbMoviesDTO} props.data -
- * @param {string|string[]=} props.className -
+ * @param {(string|string[])=} props.className -
  * @returns {import('react').FunctionComponent}
  */
 export function MovieListItemCard({ data, className }) {

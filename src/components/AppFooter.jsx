@@ -1,6 +1,10 @@
 import { GoMarkGithub } from 'react-icons/go'
 
 /**
+ * Component that renders the application footer.
+ *
+ * @function AppFooter
+ * @memberof module:components
  * @returns {import('react').FunctionComponent}
  */
 export default function AppFooter() {
