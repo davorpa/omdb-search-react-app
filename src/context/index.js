@@ -1,3 +1,8 @@
+/**
+ * @file This file contains the context of the application.
+ * @module context
+ * @see {@link https://vitejs.dev/guide/env-and-mode.html|Vite Environment Variables and Modes}
+ */
 import { OMDbClient, OMDbJSONClient } from '@services/omdb'
 
 /** @type {import('../services/omdb').OMDbAbstractClient} */

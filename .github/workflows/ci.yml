@@ -65,5 +65,30 @@ jobs:
       - name: Upload dist artifact
         uses: actions/upload-artifact@v3
         with:
-          name: dist-${{ github.run_id }}
+          name: ${{ github.event.repository.name }}--dist--${{ github.run_id }}
           path: dist
+
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          # cache: 'npm'
+      - name: Install dependencies
+        run: |
+          npm install --no-fund --no-audit
+      - name: Run docs generator
+#        continue-on-error: true
+        run: |
+          npm run generate-docs
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}--docs--${{ github.run_id }}
+          path: docs

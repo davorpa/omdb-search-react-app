@@ -7,7 +7,29 @@ import { stringToTitleCase } from '@services/utils'
 import OMDbResultType from '@services/omdb/OMDbResultType'
 
 /**
- * A TypeSearchFormSelectInput React component
+ * `TypeSearchFormSelectInput` React components renders a select input field to
+ * search by type in a movie list view component (e.g. `MovieList`)
+ *
+ * @function TypeSearchFormSelectInput
+ * @memberof module:components
+ * @param {Object} props -
+ * @param {string=} props.formId -
+ *      The html id of the form that this input is a part of
+ * @param {string=} [props.name="title"] -
+ * @param {any=} props.value -
+ * @param {Function=} props.valueSetter -
+ *      A callback function that receives the new/setted value as argument.
+ * @param {string=} [props.labelText="Title"] -
+ * @param {(string|string[])=} props.className -
+ * @param {boolean=} [props.required=false] -
+ * @param {string=} props.placeholder -
+ * @param {Function=} props.onValueChange -
+ *      A callback function that receives the event as argument.
+ *      It will be called when the value changes
+ * @param {boolean=} [props.requestSubmitOnValueChange=false] -
+ *      Experimental. If true, the form will be submitted when the value changes
+ * @param {import('react').ForwardedRef=} ref -
+ *      A `React.useRef` reference to hook this wrapped input
  * @returns {import('react').FunctionComponent}
  */
 export const TypeSearchFormSelectInput = forwardRef(
@@ -20,7 +42,7 @@ export const TypeSearchFormSelectInput = forwardRef(
    * @param {Function=} props.valueSetter -
    *      A callback function that receives the new/setted value as argument.
    * @param {string=} [props.labelText="Title"] -
-   * @param {string|string[]=} props.className -
+   * @param {(string|string[])=} props.className -
    * @param {boolean=} [props.required=false] -
    * @param {string=} props.placeholder -
    * @param {Function=} props.onValueChange -
@@ -28,7 +50,7 @@ export const TypeSearchFormSelectInput = forwardRef(
    *      It will be called when the value changes
    * @param {boolean=} [props.requestSubmitOnValueChange=false] -
    *      Experimental. If true, the form will be submitted when the value changes
-   * @param {import('react').ForwardedRef<*>=} ref -
+   * @param {import('react').ForwardedRef=} ref -
    *      A `React.useRef` reference to hook this wrapped input
    * @returns {import('react').FunctionComponent}
    */

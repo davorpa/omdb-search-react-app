@@ -5,11 +5,13 @@ import { OMDbClientContext } from '@context/omdb/client'
  * A React Hook to gain access over the OMDbClientContext
  * which provides a configured OMDb API Client ready to use.
  *
- * @returns {import('../services/omdb').OMDbClient}
- * @see OMDbClient
+ * @function useOMDbSearchTitle
+ * @returns {import('../services/omdb').OMDbAbstractClient}
+ * @memberof module:hooks
+ * @see module:services/omdb.OMDbAbstractClient
  */
 export const useOMDbClient = () => {
-  /** @type {import('../services/omdb').OMDbClient} */
+  /** @type {import('../services/omdb').OMDbAbstractClient} */
   const client = useContext(OMDbClientContext)
   if (client === undefined) {
     throw new Error(

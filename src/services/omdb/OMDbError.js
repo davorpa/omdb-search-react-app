@@ -1,5 +1,9 @@
 /**
  * Represents an inmutable error over the OMDb service.
+ *
+ * @class OMDbError
+ * @extends {Error}
+ * @memberof module:services/omdb
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#custom_error_types
  */
 export class OMDbError extends Error {

@@ -1,0 +1,112 @@
+{
+  "source": {
+    "include": ["src", "package.json", "README.md"],
+    "includePattern": ".+\\.(m|c)?js(doc|x)?$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "opts": {
+    "encoding": "utf8",
+    "readme": "./README.md",
+    "destination": "./docs/",
+    "recurse": true,
+    "verbose": true,
+    "template": "./node_modules/clean-jsdoc-theme",
+    "theme_opts": {
+      "default_theme": "dark",
+      "homepageTitle": "OMDb Search React App - Documentation",
+      "title": "OMDb Search Docs",
+      "meta": [
+        {
+          "name": "description",
+          "content": "OMDb Search React App"
+        },
+        {
+          "name": "keywords",
+          "content": "OMDb,OMDb API,Search,React,Application,Documentation"
+        },
+        {
+          "name": "author",
+          "content": "@davorpatech"
+        }
+      ],
+      "menu": [
+        {
+          "title": "Home",
+          "link": "./index.html",
+          "class": "menu-item",
+          "id": "home"
+        },
+        {
+          "title": "GitHub repo",
+          "link": "https://github.com/davorpa/omdb-search-react-app",
+          "target": "_blank",
+          "class": "menu-item",
+          "id": "repository"
+        },
+        {
+          "title": "App",
+          "link": "https://davorpa.github.io/omdb-search-react-app",
+          "target": "_blank",
+          "class": "menu-item",
+          "id": "webapp"
+        }
+      ],
+      "footer": "<footer class=\"footer-wrapper\">Made with &#x1F496 by @davorpatech</footer>",
+      "sections": [
+        "Classes",
+        "Modules",
+        "Externals",
+        "Events",
+        "Namespaces",
+        "Mixins",
+        "Tutorials",
+        "Interfaces",
+        "Global"
+      ],
+      "search": true,
+      "codepen": {
+        "enable_for": ["examples"],
+        "options": {
+          "js_external": "https://code.jquery.com/jquery-3.6.3.min.js",
+          "js_pre_processor": "babel"
+        }
+      },
+      "static_dir": ["./screenshot.png"],
+      "create_style": ".footer-wrapper { text-align: center; }",
+      "add_style_path": [],
+      "include_css": [],
+      "add_scripts": "",
+      "add_script_path": [],
+      "include_js": [],
+      "exclude_inherited": false,
+      "displayModuleHeader": true,
+      "includeFilesListInHomepage": true
+    }
+  },
+  "plugins": [
+    "plugins/markdown",
+    "./src-docs/plugins/resolve-module-type-import.cjs"
+  ],
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "templates": {
+    "search": true,
+    "cleverLinks": true,
+    "monospaceLinks": true,
+    "default": {
+      "outputSourceFiles": true,
+      "includeDate": true,
+      "useLongnameInNav": true
+    }
+  },
+  "markdown": {
+    "parser": "gfm",
+    "hardwrap": true,
+    "idInHeadings": true
+  },
+  "typescript": {
+    "moduleRoot": "src"
+  }
+}

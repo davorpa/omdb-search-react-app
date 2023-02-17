@@ -1,3 +1,7 @@
+/**
+ * @file Helper functions used by several components.
+ * @module components/utils
+ */
 import debounce from 'just-debounce-it'
 
 /**

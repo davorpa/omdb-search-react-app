@@ -8,6 +8,11 @@ import { MovieList } from '@components/movies'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
 /**
+ * Component that renders the application container and its contents
+ * (search form and it results).
+ *
+ * @function AppContainer
+ * @memberof module:components
  * @returns {import('react').FunctionComponent}
  */
 export function AppContainer() {

@@ -1,3 +1,7 @@
+/**
+ * @file The OMDb API client artifacts.
+ * @module services/omdb
+ */
 // eslint-disable-next-line no-unused-vars
 import { OMDbResultType } from './OMDbResultType'
 import { OMDbError } from './OMDbError'
@@ -9,6 +13,7 @@ import {
 } from '../utils'
 
 /**
+ * The OMDb Format Type enum.
  * @enum {string}
  * @readonly
  */
@@ -19,7 +24,7 @@ const OMDbFormatType = Object.freeze({
 
 /**
  * The type definition for an OMDb result item returned by
- * the {@linkcode OMDbClient#titleSearch} API operation.
+ * the {@linkcode OMDbAbstractClient#titleSearch} API operation.
  *
  * @typedef OMDbMoviesApiDTO
  * @type {Object}
@@ -32,7 +37,7 @@ const OMDbFormatType = Object.freeze({
 
 /**
  * The type definition for one OMDb result item returned by
- * the {@linkcode OMDbClient#titleSearch} method.
+ * the {@linkcode OMDbAbstractClient#titleSearch} method.
  *
  * @typedef OMDbMoviesDTO
  * @type {Object}
@@ -79,7 +84,7 @@ export class OMDbAbstractClient {
    * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
    * @param {string=} searchParams.year - The param that represents the year of release to search in
    * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
-   * @returns {Promise<Array<OMDbMoviesDTO>>}
+   * @returns {Promise<OMDbMoviesDTO[]>}
    * @throws {OMDbError} - If the API returns an error
    * @abstract
    */
@@ -149,18 +154,12 @@ export class OMDbAbstractClient {
  * Represents a simple OMDb client implementation that takes some JSON static files as datasource.
  *
  * Ideal for mocking purposes.
+ *
+ * @extends {OMDbAbstractClient}
  */
 export class OMDbJSONClient extends OMDbAbstractClient {
   /**
-   * Returns an array of results for a given title.
-   *
-   * @param {Object} searchParams - The params used to look for a result
-   * @param {string} searchParams.title - The param that represents the title of movie or series to search in
-   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
-   * @param {string=} searchParams.year - The param that represents the year of release to search in
-   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
-   * @returns {Promise<Array<OMDbMoviesDTO>>}
-   * @throws {OMDbError} - If the API returns an error
+   * @inheritdoc
    * @override
    */
   titleSearch({
@@ -182,9 +181,9 @@ export class OMDbJSONClient extends OMDbAbstractClient {
 
     return import(`./data/titlesearch/${filepath}.json`)
       .then(({ default: data }) => {
-        /** @type {Array<OMDbMoviesDTO>} */
+        /** @type {OMDbMoviesDTO[]} */
         const results = Array.from(
-          /** @type {Array<OMDbMoviesApiDTO>} */
+          /** @type {OMDbMoviesApiDTO[]} */
           data?.Search ?? [],
           titleSearchResultMapper
         ).filter((item) => stringCaseInsensitiveContains(item.title, title))
@@ -202,19 +201,12 @@ export class OMDbJSONClient extends OMDbAbstractClient {
 /**
  * Represents a simple OMDb API client implementation
  *
+ * @extends {OMDbAbstractClient}
  * @see https://www.omdbapi.com
  */
 export class OMDbClient extends OMDbAbstractClient {
   /**
-   * Returns an array of results for a given title
-   *
-   * @param {Object} searchParams - The params used to look for a result
-   * @param {string} searchParams.title - The param that represents the title of movie or series to search in
-   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
-   * @param {string=} searchParams.year - The param that represents the year of release to search in
-   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
-   * @returns {Promise<Array<OMDbMoviesDTO>>}
-   * @throws {OMDbError} - If the API returns an error
+   * @inheritdoc
    * @override
    */
   async titleSearch({
