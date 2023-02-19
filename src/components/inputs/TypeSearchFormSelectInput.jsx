@@ -15,11 +15,11 @@ import OMDbResultType from '@services/omdb/OMDbResultType'
  * @param {Object} props -
  * @param {string=} props.formId -
  *      The html id of the form that this input is a part of
- * @param {string=} [props.name="title"] -
+ * @param {string=} [props.name="type"] -
  * @param {any=} props.value -
  * @param {Function=} props.valueSetter -
  *      A callback function that receives the new/setted value as argument.
- * @param {string=} [props.labelText="Title"] -
+ * @param {string=} [props.labelText="Type"] -
  * @param {(string|string[])=} props.className -
  * @param {boolean=} [props.required=false] -
  * @param {string=} props.placeholder -
@@ -37,11 +37,11 @@ export const TypeSearchFormSelectInput = forwardRef(
    * @param {Object} props -
    * @param {string=} props.formId -
    *      The html id of the form that this input is a part of
-   * @param {string=} [props.name="title"] -
+   * @param {string=} [props.name="type"] -
    * @param {any=} props.value -
    * @param {Function=} props.valueSetter -
    *      A callback function that receives the new/setted value as argument.
-   * @param {string=} [props.labelText="Title"] -
+   * @param {string=} [props.labelText="Type"] -
    * @param {(string|string[])=} props.className -
    * @param {boolean=} [props.required=false] -
    * @param {string=} props.placeholder -
