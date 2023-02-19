@@ -29,6 +29,10 @@ Segunda iteración:
 - [x] Busca por los demás campos que permite la API.
 - [x] Haz que se pueda ordenar por alguno de los campos. (ej. titulo).
 
+Tercera iteración:
+
+- [ ] Implementa algún tipo de paginación (infinite scroll).
+
 ---
 
 This project was bootstrapped with [Create Vite Project](https://vitejs.dev/guide/#scaffolding-your-first-vite-project) configured with a **React SWC** template:
