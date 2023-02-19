@@ -11,7 +11,8 @@ export default function AppFooter() {
   return (
     <footer className="App-footer">
       <p>
-        Made with &#x1F49D; by <strong>@davorpa</strong> |{' '}
+        Made with &#x1F49D; by <strong>@davorpa</strong>
+        {'  '}|{'  '}
         <a
           href="https://github.com/davorpa/omdb-search-react-app"
           target="_blank"

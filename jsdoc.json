@@ -71,7 +71,7 @@
           "js_pre_processor": "babel"
         }
       },
-      "static_dir": ["./screenshot.png"],
+      "static_dir": ["./screenshot.png", "target/lighthouse/"],
       "create_style": ".footer-wrapper { text-align: center; }",
       "add_style_path": [],
       "include_css": [],

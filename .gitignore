@@ -10,10 +10,14 @@ lerna-debug.log*
 package-lock.json
 pnpm-lock.yaml
 node_modules
+*.local
+
+# Target builds
 dist
 dist-ssr
 docs
-*.local
+target/*
+!target/lighthouse
 
 # Environment variables
 .env

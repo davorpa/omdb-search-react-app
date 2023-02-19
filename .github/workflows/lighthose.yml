@@ -1,0 +1,74 @@
+name: Lighthouse
+
+on:
+  deployment:
+  deployment_status:
+  page_build:
+  workflow_dispatch:
+  schedule:
+    # Run every Sunday at 12:00 UTC
+    - cron: '0 12 * * SUN'
+
+permissions:
+  contents: write
+  pages: read
+
+
+jobs:
+
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set variables
+        id: vars
+        run: |
+          echo EVENT_NAME: ${{ github.event_name }}
+          echo REPOSITORY_OWNER: ${{ github.repository_owner }}
+          echo EVENT_REPOSITORY_NAME: ${{ github.event.repository.name }}
+          echo EVENT_REPOSITORY_HOMEPAGE: ${{ github.event.repository.homepage }}
+          DEPLOY_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          if [ "${{ github.event.repository.homepage }}" != "" ]; then
+            DEPLOY_URL="${{ github.event.repository.homepage }}"
+          fi
+          echo DEPLOY_URL: $DEPLOY_URL
+          echo "deploy-url=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "..."
+          echo -e "${{ toJSON( github.event ) }}"
+          echo "..."
+      - name: Checkout project
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Setup Chrome browser
+        uses: browser-actions/setup-chrome@latest
+        id: setup-chrome
+        with:
+          chrome-version: latest
+      - name: Print Chrome version
+        run: |
+          echo Installed chromium version: ${{ steps.setup-chrome.outputs.chrome-version }}
+          chrome --version
+      - name: Install lighthouse-badges
+        run: |
+          npm install -g --no-fund --no-audit lighthouse-badges
+      - name: Generate LightHouse badges
+        run: |
+          lighthouse-badges --save-report --output target/lighthouse --urls "${{ steps.vars.outputs.deploy-url }}"
+
+      - name: Upload lighthouse artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ github.event.repository.name }}--lighthouse--${{ github.run_id }}
+          path: target/lighthouse
+
+      - name: Commit and push changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          message: "test: Update Lighthouse report [skip ci]"
+          add: 'target/lighthouse'
+          push: true

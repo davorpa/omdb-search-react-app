@@ -1,8 +1,14 @@
 # OMDb Search React App
 
+<div align="center" markdown="1">
+
+[![Lighthouse Accessibility Badge](./target/lighthouse/lighthouse_accessibility.svg)](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fdavorpa.github.io%2Fomdb-search-react-app%2F&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa#accessibility) [![Lighthouse Best Practices Badge](./target/lighthouse/lighthouse_best-practices.svg)](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fdavorpa.github.io%2Fomdb-search-react-app%2F&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa#best-practices) [![Lighthouse Performance Badge](./target/lighthouse/lighthouse_performance.svg)](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fdavorpa.github.io%2Fomdb-search-react-app%2F&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa#performance) [![Lighthouse PWA Badge](./target/lighthouse/lighthouse_pwa.svg)](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fdavorpa.github.io%2Fomdb-search-react-app%2F&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa#pwa) [![Lighthouse SEO Badge](./target/lighthouse/lighthouse_seo.svg)](https://googlechrome.github.io/lighthouse/viewer/?psiurl=https%3A%2F%2Fdavorpa.github.io%2Fomdb-search-react-app%2F&strategy=mobile&category=performance&category=accessibility&category=best-practices&category=seo&category=pwa#seo)
+
 ![screenshot](screenshot.png)
 
-Aplicación para buscar películas usando la API de https://www.omdbapi.com
+</div>
+
+Aplicación para buscar películas usando la API de <https://www.omdbapi.com>
 
 Requerimientos:
 
