@@ -18,14 +18,16 @@ const defaultSearchParams = {
  * @param {string=} initialSearchParams.title -
  * @param {number=} initialSearchParams.year -
  * @param {string=} initialSearchParams.type -
- * @param {string=} [sortBy="title"] - The property key to sort the results by.
+ * @param {string=} sortBy - The property key to sort the results by.
+ * @param {string=} sortDir - The direction to sort the results by.
  *
  * @memberof module:hooks
  * @see https://www.omdbapi.com
  */
 export const useOMDbSearchTitle = (
   initialSearchParams = defaultSearchParams,
-  sortBy
+  sortBy,
+  sortDir = false
 ) => {
   initialSearchParams = Object.assign(
     {},
@@ -92,14 +94,19 @@ export const useOMDbSearchTitle = (
   )
 
   const processedResults = useMemo(() => {
-    if (!sortBy) return results
-    return [...results].sort((a, b) =>
-      stringCaseInsensitiveCompare(
-        getProperty(a, sortBy),
-        getProperty(b, sortBy)
-      )
+    const sortDirFactor = sortDir === true || sortDir === 'desc' ? -1 : 1
+    if (!sortBy) {
+      return sortDirFactor < 0 ? [...results].reverse() : results
+    }
+    return [...results].sort(
+      (a, b) =>
+        sortDirFactor *
+        stringCaseInsensitiveCompare(
+          getProperty(a, sortBy),
+          getProperty(b, sortBy)
+        )
     )
-  }, [results, sortBy])
+  }, [results, sortBy, sortDir])
 
   return {
     searchParams,

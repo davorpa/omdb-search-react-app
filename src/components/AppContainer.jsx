@@ -4,6 +4,7 @@ import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { YearSearchFormInput } from '@components/inputs/YearSearchFormInput'
 import { TypeSearchFormSelectInput } from '@components/inputs/TypeSearchFormSelectInput'
 import { SortByMovieFieldsRadioGroup } from '@components/inputs/SortByMovieFieldsRadioGroup'
+import { SortDirectionSelectInput } from '@components/inputs/SortDirectionSelectInput'
 import { MovieList } from '@components/movies'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
@@ -18,6 +19,7 @@ import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 export function AppContainer() {
   const containerId = useId()
   const [sortBy, setSortBy] = useState('') // None
+  const [sortDir, setSortDir] = useState('asc') // asc|desc
   const {
     searchParams,
     updateSearchParam,
@@ -25,7 +27,7 @@ export function AppContainer() {
     results: movies,
     executeSearch,
     messages
-  } = useOMDbSearchTitle(null, sortBy)
+  } = useOMDbSearchTitle(null, sortBy, sortDir)
   const searchResultsLayerRef = useRef(null)
   const titleSearchFormInputRef = useRef(null)
 
@@ -101,21 +103,37 @@ export function AppContainer() {
         className="omdb-search-results"
       >
         {!!movies?.length && (
-          <SortByMovieFieldsRadioGroup
-            formId={containerId}
-            className="omdb-sort-by"
-            value={sortBy}
-            valueSetter={setSortBy}
-          />
+          <div className="search-results-bar">
+            <SortByMovieFieldsRadioGroup
+              formId={containerId}
+              className="sort-by"
+              value={sortBy}
+              valueSetter={setSortBy}
+            />
+            <SortDirectionSelectInput
+              formId={containerId}
+              className="sort-dir"
+              value={sortDir}
+              valueSetter={setSortDir}
+            />
+          </div>
         )}
         <MovieList items={movies} className="grid fluid-cols no-bullets" />
         {!!movies?.length && (
-          <SortByMovieFieldsRadioGroup
-            formId={containerId}
-            className="omdb-sort-by"
-            value={sortBy}
-            valueSetter={setSortBy}
-          />
+          <div className="search-results-bar">
+            <SortByMovieFieldsRadioGroup
+              formId={containerId}
+              className="sort-by"
+              value={sortBy}
+              valueSetter={setSortBy}
+            />
+            <SortDirectionSelectInput
+              formId={containerId}
+              className="sort-dir"
+              value={sortDir}
+              valueSetter={setSortDir}
+            />
+          </div>
         )}
       </main>
     </>
