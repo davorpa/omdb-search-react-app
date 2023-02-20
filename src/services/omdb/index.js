@@ -81,10 +81,13 @@ export class OMDbAbstractClient {
    *
    * @param {Object} searchParams - The params used to look for a result
    * @param {string} searchParams.title - The param that represents the title of movie or series to search in
-   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return (movie, series, episode, game...)
+   * @param {OMDbResultType=} searchParams.resultType - The param that represents the type of result to return
+   *      (movie, series, episode, game...)
    * @param {string=} searchParams.year - The param that represents the year of release to search in
-   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most. Defaults to 1
-   * @returns {Promise<OMDbMoviesDTO[]>}
+   * @param {number=} [searchParams.page=1] - The page to fetch. Each page contains 10 items at most.
+   *      Defaults to 1. A value between 1 and 100 is expected
+   * @returns {Promise<{results : OMDbMoviesDTO[], count: number}>} -
+   *      A Promise resolved with the paged results and the total count of results
    * @throws {OMDbError} - If the API returns an error
    * @abstract
    */
@@ -190,7 +193,10 @@ export class OMDbJSONClient extends OMDbAbstractClient {
         if (filepath !== 'no-results' && stringIsFalse(data.Response)) {
           throw new OMDbError(data.Error)
         }
-        return results
+        return {
+          results: results.slice((page - 1) * 10, page * 10),
+          count: data?.totalResults ?? 0
+        }
       })
       .catch((e) => {
         throw new OMDbError(e.message)
@@ -222,6 +228,7 @@ export class OMDbClient extends OMDbAbstractClient {
     title && requestUrl.searchParams.append('s', title)
     resultType && requestUrl.searchParams.append('type', resultType)
     year && requestUrl.searchParams.append('y', year)
+    page && requestUrl.searchParams.append('page', page)
     // execute request
     const response = await fetch(requestUrl, {
       method: 'GET',
@@ -229,7 +236,10 @@ export class OMDbClient extends OMDbAbstractClient {
     })
     // parse and make the response DTO mapping
     const data = await this.#processResponseJSON(response)
-    return Array.from(data?.Search ?? [], titleSearchResultMapper)
+    return {
+      results: Array.from(data?.Search ?? [], titleSearchResultMapper),
+      count: data?.totalResults ?? 0
+    }
   }
 
   /**

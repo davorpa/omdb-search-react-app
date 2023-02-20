@@ -1,4 +1,4 @@
-import { useId, useRef, useEffect, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { YearSearchFormInput } from '@components/inputs/YearSearchFormInput'
@@ -25,6 +25,7 @@ export function AppContainer() {
     updateSearchParam,
     loading,
     results: movies,
+    totalResults: totalMovies = movies?.length ?? 0,
     executeSearch,
     messages
   } = useOMDbSearchTitle(null, sortBy, sortDir)
@@ -52,7 +53,7 @@ export function AppContainer() {
     /** @type {import('react').SyntheticEvent} */ event
   ) => {
     event.preventDefault()
-    executeSearch(searchParams, sortBy)
+    executeSearch(searchParams, sortBy, sortDir)
   }
 
   return (
@@ -104,35 +105,51 @@ export function AppContainer() {
       >
         {!!movies?.length && (
           <div className="search-results-bar">
-            <SortByMovieFieldsRadioGroup
-              formId={containerId}
-              className="sort-by"
-              value={sortBy}
-              valueSetter={setSortBy}
-            />
-            <SortDirectionSelectInput
-              formId={containerId}
-              className="sort-dir"
-              value={sortDir}
-              valueSetter={setSortDir}
-            />
+            <div className="pager">
+              {'Showing  '}
+              <span className="pager-count">{movies.length}</span>
+              {'  of  '}
+              <span className="pager-total">{totalMovies}</span>
+            </div>
+            <div className="controls">
+              <SortByMovieFieldsRadioGroup
+                formId={containerId}
+                className="sort-by"
+                value={sortBy}
+                valueSetter={setSortBy}
+              />
+              <SortDirectionSelectInput
+                formId={containerId}
+                className="sort-dir"
+                value={sortDir}
+                valueSetter={setSortDir}
+              />
+            </div>
           </div>
         )}
         <MovieList items={movies} className="grid fluid-cols no-bullets" />
         {!!movies?.length && (
           <div className="search-results-bar">
-            <SortByMovieFieldsRadioGroup
-              formId={containerId}
-              className="sort-by"
-              value={sortBy}
-              valueSetter={setSortBy}
-            />
-            <SortDirectionSelectInput
-              formId={containerId}
-              className="sort-dir"
-              value={sortDir}
-              valueSetter={setSortDir}
-            />
+            <div className="pager">
+              {'Showing  '}
+              <span className="pager-count">{movies.length}</span>
+              {'  of  '}
+              <span className="pager-total">{totalMovies}</span>
+            </div>
+            <div className="controls">
+              <SortByMovieFieldsRadioGroup
+                formId={containerId}
+                className="sort-by"
+                value={sortBy}
+                valueSetter={setSortBy}
+              />
+              <SortDirectionSelectInput
+                formId={containerId}
+                className="sort-dir"
+                value={sortDir}
+                valueSetter={setSortDir}
+              />
+            </div>
           </div>
         )}
       </main>

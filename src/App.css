@@ -262,13 +262,27 @@ div.message.warning {
 .search-results-bar {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 6px;
+}
+
+.search-results-bar > .controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.pager-count,
+.pager-total {
+  font-weight: 700;
 }
 
 .omdb-search-results .sort-by,
 .omdb-search-results .sort-dir {
   margin-bottom: 0;
+  min-width: 80px;
 }
 
 .omdb-search-results .sort-by {
@@ -278,7 +292,6 @@ div.message.warning {
 
 .omdb-search-results .sort-by + .sort-dir {
   margin-left: calc(-6px * 2);
-  min-width: auto;
   border-left-width: 0;
   border-radius: 0 6px 6px 0;
 }
@@ -288,6 +301,12 @@ div.message.warning {
 }
 
 @media (min-width: 470px) {
+  .search-results-bar > .pager {
+    margin-left: 10px;
+  }
+  .search-results-bar > .controls {
+    gap: 6px;
+  }
   .omdb-search-results .form-input.sort-by,
   .omdb-search-results .form-input.sort-dir {
     min-width: calc(50% - 6px);
