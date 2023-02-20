@@ -279,6 +279,10 @@ div.message.warning {
   font-weight: 700;
 }
 
+.load-more {
+  margin: 0 10px;
+}
+
 .omdb-search-results .sort-by,
 .omdb-search-results .sort-dir {
   margin-bottom: 0;

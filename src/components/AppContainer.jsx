@@ -6,6 +6,7 @@ import { TypeSearchFormSelectInput } from '@components/inputs/TypeSearchFormSele
 import { SortByMovieFieldsRadioGroup } from '@components/inputs/SortByMovieFieldsRadioGroup'
 import { SortDirectionSelectInput } from '@components/inputs/SortDirectionSelectInput'
 import { MovieList } from '@components/movies'
+import { LoaderMoreButton } from '@components/LoaderMoreButton'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
 /**
@@ -23,6 +24,8 @@ export function AppContainer() {
   const {
     searchParams,
     updateSearchParam,
+    loadedPage,
+    hasMorePages,
     loading,
     results: movies,
     totalResults: totalMovies = movies?.length ?? 0,
@@ -53,7 +56,14 @@ export function AppContainer() {
     /** @type {import('react').SyntheticEvent} */ event
   ) => {
     event.preventDefault()
-    executeSearch(searchParams, sortBy, sortDir)
+    executeSearch(searchParams, 1) // resetting page
+  }
+
+  const handleLoadMoreClick = async (
+    /** @type {import('react').SyntheticEvent} */ event
+  ) => {
+    event.preventDefault()
+    executeSearch(searchParams, loadedPage + 1) // next page
   }
 
   return (
@@ -128,6 +138,9 @@ export function AppContainer() {
           </div>
         )}
         <MovieList items={movies} className="grid fluid-cols no-bullets" />
+        {hasMorePages && (
+          <LoaderMoreButton onClick={handleLoadMoreClick} busy={loading} />
+        )}
         {!!movies?.length && (
           <div className="search-results-bar">
             <div className="pager">

@@ -35,6 +35,7 @@ export const useOMDbSearchTitle = (
     initialSearchParams
   ) // Ensure each defaults are set
   const [searchParams, setSearchParams] = useState(initialSearchParams)
+  const [loadedPage, setLoadedPage] = useState(1) // 1-100
   const [messages, setMessages] = useState({}) // no error messages
   const [results, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(results.length)
@@ -62,31 +63,42 @@ export const useOMDbSearchTitle = (
   )
 
   const previousSearchParamsRef = useRef(searchParams)
+  const previousLoadedPageRef = useRef(loadedPage)
   const executeSearch = useCallback(
     /**
      * @param {Object} searchParams
      * @param {string=} searchParams.title -
      * @param {number=} searchParams.year -
      * @param {string=} searchParams.type -
+     * @param {number=} page - The page number to fetch.
+     *      A value between 1 and 100 is expected.
      */
-    (searchParams) => {
-      if (previousSearchParamsRef.current === searchParams) {
+    (searchParams, page) => {
+      const searchParamsChanged =
+        previousSearchParamsRef.current !== searchParams
+      const pageChanged = previousLoadedPageRef.current !== page
+      if (!(searchParamsChanged || pageChanged)) {
         return
       }
       setLoading(true)
       setMessages({}) // clearMessages
+      // fix page if search params have changed
+      setLoadedPage(searchParamsChanged ? 1 : page)
 
       previousSearchParamsRef.current = searchParams
+      previousLoadedPageRef.current = page
       omdbClient
         .titleSearch({
           title: searchParams.title,
           year: searchParams.year,
           resultType: searchParams.type,
-          page: 1
+          page
         })
         .then(({ results: data, count }) => {
-          setSearchResults(data)
           setTotalResults(count)
+          page <= 1 || searchParamsChanged
+            ? setSearchResults(data) // reset results
+            : setSearchResults((results) => results.concat(data)) // append results
         })
         .catch((e) => {
           addMessage('*', e.message) // assume all errors are global
@@ -116,6 +128,8 @@ export const useOMDbSearchTitle = (
   return {
     searchParams,
     updateSearchParam,
+    loadedPage,
+    hasMorePages: processedResults.length < totalResults,
     loading,
     results: processedResults,
     totalResults,
