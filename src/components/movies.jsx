@@ -86,6 +86,7 @@ export function MovieListItemCard({ data, className }) {
           className="card-img movie-poster"
           src={posterUrls.sx300}
           alt={`"${title}"'s poster`}
+          loading="lazy"
         />
       )}
       {!hasPoster && (
