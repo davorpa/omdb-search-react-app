@@ -7,6 +7,7 @@ import { SortByMovieFieldsRadioGroup } from '@components/inputs/SortByMovieField
 import { SortDirectionSelectInput } from '@components/inputs/SortDirectionSelectInput'
 import { MovieList } from '@components/movies'
 import { LoaderMoreButton } from '@components/LoaderMoreButton'
+import { PagerShowingCountOf } from '@components/PagerShowingCountOf'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
 /**
@@ -115,12 +116,7 @@ export function AppContainer() {
       >
         {!!movies?.length && (
           <div className="search-results-bar">
-            <div className="pager">
-              {'Showing  '}
-              <span className="pager-count">{movies.length}</span>
-              {'  of  '}
-              <span className="pager-total">{totalMovies}</span>
-            </div>
+            <PagerShowingCountOf count={movies.length} total={totalMovies} />
             <div className="controls">
               <SortByMovieFieldsRadioGroup
                 formId={containerId}
@@ -143,12 +139,7 @@ export function AppContainer() {
         )}
         {!!movies?.length && (
           <div className="search-results-bar">
-            <div className="pager">
-              {'Showing  '}
-              <span className="pager-count">{movies.length}</span>
-              {'  of  '}
-              <span className="pager-total">{totalMovies}</span>
-            </div>
+            <PagerShowingCountOf count={movies.length} total={totalMovies} />
             <div className="controls">
               <SortByMovieFieldsRadioGroup
                 formId={containerId}
