@@ -32,7 +32,7 @@ Segunda iteración:
 Tercera iteración:
 
 - [x] Implementa algún tipo de paginación.
-- [ ] Modifica el punto anterior para que se ejecute con infinite-scroll (IntersectionObserver)
+- [x] Modifica el punto anterior para que se ejecute con infinite-scroll (`IntersectionObserver`)
 
 ---
 

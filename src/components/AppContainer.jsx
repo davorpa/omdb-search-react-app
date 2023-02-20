@@ -9,6 +9,7 @@ import { MovieList } from '@components/MovieList'
 import { LoaderMoreButton } from '@components/LoaderMoreButton'
 import { PagerShowingCountOf } from '@components/PagerShowingCountOf'
 import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
+import { useInViewClickerRef } from '@hooks/useInViewClickerRef'
 
 /**
  * Component that renders the application container and its contents
@@ -33,6 +34,9 @@ export function AppContainer() {
     executeSearch,
     messages
   } = useOMDbSearchTitle(null, sortBy, sortDir)
+
+  const loaderMoreButtonRef = useInViewClickerRef(null, hasMorePages)
+
   const searchResultsLayerRef = useRef(null)
   const titleSearchFormInputRef = useRef(null)
 
@@ -60,7 +64,7 @@ export function AppContainer() {
     executeSearch(searchParams, 1) // resetting page
   }
 
-  const handleLoadMoreClick = async (
+  const handleLoadMoreClick = (
     /** @type {import('react').SyntheticEvent} */ event
   ) => {
     event.preventDefault()
@@ -135,7 +139,11 @@ export function AppContainer() {
         )}
         <MovieList items={movies} className="grid fluid-cols no-bullets" />
         {hasMorePages && (
-          <LoaderMoreButton onClick={handleLoadMoreClick} busy={loading} />
+          <LoaderMoreButton
+            ref={loaderMoreButtonRef}
+            onClick={handleLoadMoreClick}
+            busy={loading}
+          />
         )}
         {!!movies?.length && (
           <div className="search-results-bar">
