@@ -195,7 +195,7 @@ export class OMDbJSONClient extends OMDbAbstractClient {
         }
         return {
           results: results.slice((page - 1) * 10, page * 10),
-          count: data?.totalResults ?? 0
+          count: Number(data?.totalResults ?? 0)
         }
       })
       .catch((e) => {
@@ -238,7 +238,7 @@ export class OMDbClient extends OMDbAbstractClient {
     const data = await this.#processResponseJSON(response)
     return {
       results: Array.from(data?.Search ?? [], titleSearchResultMapper),
-      count: data?.totalResults ?? 0
+      count: Number(data?.totalResults ?? 0)
     }
   }
 
