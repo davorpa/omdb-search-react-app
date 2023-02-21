@@ -14,7 +14,9 @@ const defaultObserverOptions = {
  *
  * Usefull to trigger the pager action in charge of fetch more data / pages.
  *
- * @param {Object} observerOptions -
+ * @function useInViewClickerRef
+ * @memberof module:hooks
+ * @param {IntersectionObserverInit} observerOptions -
  *    Options to be passed to the Intersection Observer API as:
  * @param {Element=} observerOptions.root -
  *      The element that is used as the viewport for checking visibility
@@ -68,6 +70,7 @@ export function useInViewClickerRef(
 
       // create new observer
       observer.current = new IntersectionObserver(
+        // deconstruct the first entry. It's the only one we need
         ([entry]) => {
           // fire click when element enters (is intersecting with).
           // This triggers the pager hook to fetch more items in the new page
