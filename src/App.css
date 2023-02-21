@@ -55,6 +55,12 @@ input[type=number] {
   margin-top: 0;
 }
 
+.App .logo {
+  width: 32px;
+  height: 32px;
+  translate: 0 4px;
+}
+
 .App-footer {
   flex-shrink: 0;
   margin-top: 24px;
@@ -388,6 +394,10 @@ div.message.warning {
 
 .text-justify {
   text-align: justify;
+}
+
+.ws-nowrap {
+  white-space: nowrap;
 }
 
 /* Layout */
