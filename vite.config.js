@@ -3,27 +3,48 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 
-const USE_REPO_PAGES = !process.env.VITE_ROOT_PAGES
-const REPO_NAME = path.basename(process.cwd())
-const mode =
-  process.env.NODE_ENV === 'production' ? 'production' : 'development'
-const base = mode === 'production' && USE_REPO_PAGES ? `/${REPO_NAME}/` : '/'
-
 // https://vitejs.dev/config/
-export default defineConfig({
-  base,
-  mode,
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': srcAliasOf(),
-      '@components': srcAliasOf('components'),
-      '@context': srcAliasOf('context'),
-      '@hooks': srcAliasOf('hooks'),
-      '@services': srcAliasOf('services')
+/** @type {import('vite').UserConfig} */
+export default ({ command, mode }) => {
+  const usingRepoPages = !process.env.VITE_ROOT_PAGES
+  const folderName = path.basename(process.cwd())
+  // append folder name to base path if using GitHub/GitLab repo pages
+  const base = mode === 'production' && usingRepoPages ? `/${folderName}/` : '/'
+
+  console.log('Configuring with...', {
+    command,
+    mode,
+    usingRepoPages,
+    folderName,
+    base
+  })
+
+  return defineConfig({
+    base,
+    mode,
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': srcAliasOf(),
+        '@components': srcAliasOf('components'),
+        '@context': srcAliasOf('context'),
+        '@hooks': srcAliasOf('hooks'),
+        '@services': srcAliasOf('services')
+      }
+    },
+    server: {
+      watch: {
+        ignored: [
+          `**/${folderName}/target/**`, // ignore 3th-party output
+          `**/${folderName}/docs/**`, // ignore docs folder
+          `**/${folderName}/src-docs/**`, // ignore src-docs folder
+          `**/${folderName}/jsdoc.json`, // ignore jsdoc config
+          `**/${folderName}/README.md` // ignore jsdoc config
+        ]
+      }
     }
-  }
-})
+  })
+}
 
 function srcAliasOf(slug = '') {
   const url = new URL('./src/' + slug, import.meta.url)
