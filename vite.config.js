@@ -2,27 +2,49 @@ import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
+import { createHtmlPlugin } from 'vite-plugin-html'
 
 // https://vitejs.dev/config/
 /** @type {import('vite').UserConfig} */
 export default ({ command, mode }) => {
-  const usingRepoPages = !process.env.VITE_ROOT_PAGES
-  const folderName = path.basename(process.cwd())
+  const root = process.cwd()
+  const folderName = path.basename(root)
   // append folder name to base path if using GitHub/GitLab repo pages
+  const usingRepoPages = !process.env.VITE_ROOT_PAGES
   const base = mode === 'production' && usingRepoPages ? `/${folderName}/` : '/'
+
+  const isBuild = command === 'build'
 
   console.log('Configuring with...', {
     command,
     mode,
     usingRepoPages,
+    root,
     folderName,
     base
   })
 
   return defineConfig({
+    root,
     base,
     mode,
-    plugins: [react()],
+    plugins: [
+      react(),
+      createHtmlPlugin({
+        minify: isBuild,
+        inject: {
+          // Inject data into ejs template
+          data: {
+            PUBLIC_URL: base,
+            TITLE: 'OMDb Search',
+            DESCRIPTION: 'An awesome OMDB Search app developed using React.js',
+            KEYWORDS:
+              'IMDb,OMDb,OMDb API,search,api,react,vite,application,games,movies,series,anime,documentary,short,video,game,episode,episodes,app,web,website,web app',
+            THEME_COLOR: '#0068b5'
+          }
+        }
+      })
+    ],
     resolve: {
       alias: {
         '@': srcAliasOf(),

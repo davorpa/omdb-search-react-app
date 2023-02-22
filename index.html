@@ -2,11 +2,61 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title><%= TITLE %></title>
+    <meta name="description" content="<%= DESCRIPTION %>" />
+    <meta name="keywords" content="<%= KEYWORDS %>" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>OMDB Search</title>
-    <meta name="description" content="An awesome OMDB Search app developed using React.js" />
-    <meta name="keywords" content="IMDb,OMDb,OMDb API,search,api,react,vite,application" />
+
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/apple-touch-icon-152x152-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/apple-touch-icon-120x120-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/apple-touch-icon-76x76-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/apple-touch-icon-60x60-precomposed.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/apple-touch-icon-57x57-precomposed.png" />
+    <link rel="apple-touch-startup-image" href="/apple-touch-icon-precomposed.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="<%= THEME_COLOR %>" />
+    <!-- Allow web app to be run in full-screen mode - iOS. -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Configure the status bar - iOS. -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <!-- Make the app title different than the page title - iOS. -->
+    <meta name="apple-mobile-web-app-title" content="<%= TITLE %>" />
+
+    <!-- Make the app title different than the page title and configure icons - Android. -->
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Allow web app to be run in full-screen mode - Android. -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- Make the app title different than the page title - Android. -->
+    <meta name="application-name" content="<%= TITLE %>" />
+    <!-- Android dock color -->
+    <meta name="theme-color" content="<%= THEME_COLOR %>" />
+
+    <!-- Windows dock color -->
+    <meta name="msapplication-TileColor" content="<%= THEME_COLOR %>" />
+    <!-- Windows icons -->
+    <meta name="msapplication-TileImage" content="<%= PUBLIC_URL %>mstile-144x144.png" />
+    <!-- Make the app title different than the page title and configure icons - Windows. -->
+    <meta name="msapplication-config" content="<%= PUBLIC_URL %>browserconfig.xml" />
+
     <link rel="preconnect" href="https://www.omdbapi.com" />
     <link rel="preconnect" href="https://img.omdbapi.com" />
     <link rel="preconnect" href="https://m.media-amazon.com" crossorigin />
