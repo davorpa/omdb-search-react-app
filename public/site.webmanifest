@@ -2,6 +2,8 @@
   "$schema": "https://json.schemastore.org/web-manifest-combined.json",
   "name": "OMDb Search",
   "short_name": "OMDb Search",
+  "description": "Search for movies, TV shows, Series, Episodes and Games using the OMDb API",
+  "start_url": "./index.html",
   "icons": [
     {
       "src": "android-chrome-192x192.png",
