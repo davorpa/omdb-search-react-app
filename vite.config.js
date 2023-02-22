@@ -46,6 +46,10 @@ export default ({ command, mode }) => {
         }
       })
     ],
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true
+    },
     resolve: {
       alias: {
         '@': srcAliasOf(),
