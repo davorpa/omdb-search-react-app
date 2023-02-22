@@ -37,7 +37,8 @@ export default ({ command, mode }) => {
           data: {
             PUBLIC_URL: base,
             TITLE: 'OMDb Search',
-            DESCRIPTION: 'An awesome OMDB Search app developed using React.js',
+            DESCRIPTION:
+              'Search for movies, TV shows, Series, Episodes and Games using the OMDb API',
             KEYWORDS:
               'IMDb,OMDb,OMDb API,search,api,react,vite,application,games,movies,series,anime,documentary,short,video,game,episode,episodes,app,web,website,web app',
             THEME_COLOR: '#0068b5'
