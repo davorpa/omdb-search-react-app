@@ -47,7 +47,7 @@ export const useOMDbSearchTitle = (
 
   const updateSearchParam = useCallback(
     (value, key) => {
-      // TODO: make binding input validations based on the key
+      // TODO: make binding input validations based on the key?
       const newParams = { ...searchParams }
       newParams[key] = value
       setSearchParams(newParams)
@@ -95,8 +95,8 @@ export const useOMDbSearchTitle = (
             : setSearchResults((results) => results.concat(data)) // append results
         })
         .catch((e) => {
-          // assuming all errors are global
-          addGlobalActionMessage(e.message)
+          // assuming all errors are global messages of type 'error'
+          addGlobalActionMessage({ type: 'error', text: e.message })
         })
         .finally(() => {
           setLoading(false)

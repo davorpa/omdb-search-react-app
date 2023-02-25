@@ -1,4 +1,5 @@
 import { useId, useState } from 'react'
+import { GlobalActionMessages } from '@components/action-messages'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { YearSearchFormInput } from '@components/inputs/YearSearchFormInput'
@@ -57,9 +58,7 @@ export function AppContainer() {
 
   return (
     <>
-      {messages['*'] /** Print global messages */ && (
-        <div className="message danger">{messages['*']}</div>
-      )}
+      <GlobalActionMessages messages={messages} />
       <form
         id={containerId}
         action={'#' + containerId + '-results'}
