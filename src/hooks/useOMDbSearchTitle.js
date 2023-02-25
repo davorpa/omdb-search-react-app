@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react'
 import getProperty from 'just-safe-get'
 import { useOMDbClient } from '@hooks/useOMDbClient'
+import { useActionMessages } from '@hooks/useActionMessages'
 import { stringCaseInsensitiveCompare } from '@services/utils'
 
 const defaultSearchParams = {
@@ -36,21 +37,13 @@ export const useOMDbSearchTitle = (
   ) // Ensure each defaults are set
   const [searchParams, setSearchParams] = useState(initialSearchParams)
   const [loadedPage, setLoadedPage] = useState(1) // 1-100
-  const [messages, setMessages] = useState({}) // no error messages
+  const { messages, addGlobalActionMessage, clearActionMessages } =
+    useActionMessages()
   const [results, setSearchResults] = useState([])
   const [totalResults, setTotalResults] = useState(results.length)
   const [loading, setLoading] = useState(false)
   /** @type {import('../services/omdb').OMDbAbstractClient} */
   const omdbClient = useOMDbClient()
-
-  const addMessage = useCallback(
-    (key, messageText) => {
-      const newMessages = { ...messages }
-      newMessages[key] = messageText
-      setMessages(newMessages)
-    },
-    [messages]
-  )
 
   const updateSearchParam = useCallback(
     (value, key) => {
@@ -81,7 +74,8 @@ export const useOMDbSearchTitle = (
         return
       }
       setLoading(true)
-      setMessages({}) // clearMessages
+      // clear all messages
+      clearActionMessages()
       // fix page if search params have changed
       setLoadedPage(searchParamsChanged ? 1 : page)
 
@@ -101,13 +95,14 @@ export const useOMDbSearchTitle = (
             : setSearchResults((results) => results.concat(data)) // append results
         })
         .catch((e) => {
-          addMessage('*', e.message) // assume all errors are global
+          // assuming all errors are global
+          addGlobalActionMessage(e.message)
         })
         .finally(() => {
           setLoading(false)
         })
     },
-    [omdbClient, addMessage]
+    [omdbClient, addGlobalActionMessage, clearActionMessages]
   )
 
   const processedResults = useMemo(() => {
