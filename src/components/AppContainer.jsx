@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useId, useState } from 'react'
 import { SearchSubmitButton } from '@components/inputs/SearchSubmitButton'
 import { TitleSearchFormInput } from '@components/inputs/TitleSearchFormInput'
 import { YearSearchFormInput } from '@components/inputs/YearSearchFormInput'
@@ -8,8 +8,9 @@ import { SortDirectionSelectInput } from '@components/inputs/SortDirectionSelect
 import { MovieList } from '@components/MovieList'
 import { LoaderMoreButton } from '@components/LoaderMoreButton'
 import { PagerShowingCountOf } from '@components/PagerShowingCountOf'
-import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
+import { useFocuserEffect } from '@hooks/useFocuserEffect'
 import { useInViewClickerRef } from '@hooks/useInViewClickerRef'
+import { useOMDbSearchTitle } from '@hooks/useOMDbSearchTitle'
 
 /**
  * Component that renders the application container and its contents
@@ -37,25 +38,8 @@ export function AppContainer() {
 
   const loaderMoreButtonRef = useInViewClickerRef(null, hasMorePages)
 
-  const searchResultsLayerRef = useRef(null)
-  const titleSearchFormInputRef = useRef(null)
-
-  const searchEffectMonitorRef = useRef(true)
-  useEffect(() => {
-    if (searchEffectMonitorRef.current) {
-      searchEffectMonitorRef.current = false
-      return
-    }
-    if (movies.length) {
-      searchResultsLayerRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      })
-    } else {
-      titleSearchFormInputRef.current.focus()
-    }
-  }, [movies])
+  const [searchResultsLayerRef, titleSearchFormInputRef] =
+    useFocuserEffect(movies)
 
   const handleSearchFormSubmit = (
     /** @type {import('react').SyntheticEvent} */ event
