@@ -20,7 +20,7 @@ export function MovieListItemCard({ data, className }) {
 
   return (
     <li
-      className={clsx('card', hasPoster && 'no-poster', className)}
+      className={clsx('card', !hasPoster && 'no-poster', className)}
       data-id={imdbID}
     >
       <h3 className="card-title movie-title">{title}</h3>
