@@ -46,6 +46,23 @@ export default ({ command, mode }) => {
         }
       })
     ],
+    test: {
+      coverage: {
+        provider: 'c8',
+        reportsDirectory: './target/coverage',
+        reporter: ['json', 'lcov', 'text', 'text-summary']
+      },
+      environment: 'node',
+      environmentMatchGlobs: [
+        // all tests in __tests__/ with .XXX.test.js will run in that environment
+        ['**/*.*dom.test.js', 'jsdom'],
+        ['**/*.*dom.test.jsx', 'jsdom'],
+        ['**/*.*dom.spec.js', 'jsdom'],
+        ['**/*.*dom.spec.jsx', 'jsdom']
+        // ...
+      ],
+      globals: true
+    },
     build: {
       outDir: 'dist',
       emptyOutDir: true
@@ -62,6 +79,7 @@ export default ({ command, mode }) => {
     server: {
       watch: {
         ignored: [
+          `**/${folderName}/__test__/**`, // ignore test folder
           `**/${folderName}/target/**`, // ignore 3th-party output
           `**/${folderName}/docs/**`, // ignore docs folder
           `**/${folderName}/src-docs/**`, // ignore src-docs folder
