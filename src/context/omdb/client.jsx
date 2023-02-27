@@ -11,7 +11,7 @@ import { omdbClient } from '@/context'
  * A React `Context` that provides access to the `OMDbClient`
  * @type {import('react').Context<import('../../services/omdb').OMDbAbstractClient>}
  */
-export const OMDbClientContext = React.createContext(omdbClient)
+export const OMDbClientContext = React.createContext()
 
 /**
  * A React `Context.Provider` to gain access to the current `OMDbClient` module instance
