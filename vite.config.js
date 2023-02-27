@@ -61,7 +61,11 @@ export default ({ command, mode }) => {
         ['**/*.*dom.spec.jsx', 'jsdom']
         // ...
       ],
-      globals: true
+      globals: true,
+      setupFiles: [
+        // setup files for all tests
+        './__tests__/setup-tests.js'
+      ]
     },
     build: {
       outDir: 'dist',
