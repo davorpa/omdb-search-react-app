@@ -68,7 +68,7 @@ export const SortDirectionSelectInput = forwardRef(
     },
     ref
   ) => {
-    const inputId = useId() + '-sort-by'
+    const inputId = useId() + '-sort-dir'
 
     const handleInputOnChange = useCallback(
       (/** @type {import('react').SyntheticEvent} */ event) => {
