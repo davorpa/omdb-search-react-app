@@ -319,7 +319,7 @@ const rePosterUrlSize = /_SX\d+/gm
 
 export const posterUrlsExtractor = (/** @type {string} */ posterUrl) =>
   /** @type {OMDbMoviePostersDTO} */ (
-    posterUrl === 'N/A'
+    !posterUrl || posterUrl === 'N/A'
       ? null
       : {
           sx150: posterUrl.replace(rePosterUrlSize, '_SX150'),
