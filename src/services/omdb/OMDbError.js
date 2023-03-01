@@ -1,12 +1,14 @@
 /**
- * Represents an inmutable error over the OMDb service.
+ * Represents an inmutable error that happens in the OMDb service layer.
  *
- * @class OMDbError
  * @extends {Error}
  * @memberof module:services/omdb
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error#custom_error_types
  */
-export class OMDbError extends Error {
+class OMDbError extends Error {
+  /**
+   * Creates a new instance of the OMDb Error class.
+   */
   constructor(message, ...params) {
     // provide toString() message and
     // pass remaining arguments (including vendor specific ones) to parent constructor
@@ -21,7 +23,12 @@ export class OMDbError extends Error {
   /**
    * The inmutable name error itself with extensibility support.
    * ex. Eg in this context: `OMDbError`.
-   * @return string
+   *
+   * @return {string}
+   * @readonly
+   * @type {string}
+   * @override
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name
    */
   get name() {
     return this.constructor.name
@@ -30,7 +37,8 @@ export class OMDbError extends Error {
   /**
    * Converts this class instances to JSON string.
    * `JSON.stringify()` calls this mixin when marshalling to JSON.
-   * @return object
+   *
+   * @return {Object}
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#tojson_behavior
    */
   toJSON(/* key */) {
@@ -53,10 +61,17 @@ export class OMDbError extends Error {
   }
 
   /**
-   * An exportable JSON mark. Always true.
-   * @return bool
+   * Property that acts as an exportable JSON mark. Always `true`.
+   * This property is used to identify the error type when exporting to JSON.
+   *
+   * @return {bool}
+   * @readonly
+   * @type {bool}
+   * @protected
    */
   get error() {
     return true
   }
 }
+
+export default OMDbError

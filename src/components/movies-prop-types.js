@@ -1,5 +1,5 @@
 import reactPropTypes from 'prop-types'
-import { OMDbResultType } from '@services/omdb/OMDbResultType'
+import { OMDbResultType } from '@services/omdb'
 
 const movieTypePropType = reactPropTypes.oneOf(Object.values(OMDbResultType))
 

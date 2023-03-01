@@ -3,8 +3,8 @@ import reactPropTypes from 'prop-types'
 import clsx from 'clsx'
 import corePropTypes from '../prop-types'
 import { handleComponentInputOnChange } from './utils'
+import { OMDbResultType } from '@services/omdb'
 import { stringToTitleCase } from '@shared/utils'
-import OMDbResultType from '@services/omdb/OMDbResultType'
 
 /**
  * `TypeSearchFormSelectInput` React components renders a select input field to

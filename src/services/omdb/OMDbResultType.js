@@ -5,10 +5,26 @@
  * @memberof module:services/omdb
  * @see https://www.omdbapi.com/#parameters
  */
-export const OMDbResultType = Object.freeze({
+const OMDbResultType = Object.freeze({
+  /**
+   * The "Movie" enum value.
+   * @memberof OMDbResultType
+   */
   MOVIE: 'movie',
+  /**
+   * The "Series" enum value.
+   * @memberof OMDbResultType
+   */
   SERIES: 'series',
+  /**
+   * The "Episode" enum value.
+   * @memberof OMDbResultType
+   */
   EPISODE: 'episode',
+  /**
+   * The "Game" enum value.
+   * @memberof OMDbResultType
+   */
   GAME: 'game'
 })
 
