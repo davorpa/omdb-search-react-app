@@ -3,7 +3,11 @@ import OMDbResultType from './OMDbResultType'
 import OMDbAbstractClient from './OMDbAbstractClient'
 import OMDbError from './OMDbError'
 import { titleSearchResultMapper } from './data-mappers'
-import { stringCaseInsensitiveContains, stringIsFalse } from '@shared/utils'
+import {
+  stringCaseInsensitiveContains,
+  stringIsFalse,
+  stringIsEmpty
+} from '@shared/utils'
 
 /**
  * Represents a simple OMDb client implementation that takes some JSON static files as datasource.
@@ -30,31 +34,41 @@ class OMDbJSONClient extends OMDbAbstractClient {
    * @override
    */
   titleSearch({ title, resultType, year, page = 1 } = {}) {
-    let filepath = Math.random() * 100 > 85 ? 'ok-page-results' : 'no-results'
-    if (/\s+/.test(this.apiKey)) {
-      filepath = '../no-api-key'
+    const modules = import.meta.glob(
+      ['./data/*.json', './data/titlesearch/*.json'],
+      { as: 'json' }
+    )
+
+    let filepath = 'titlesearch/ok-page-results'
+    if (/^\s+$/.test(this.apiKey)) {
+      filepath = 'no-api-key'
     } else if (/\s+/.test(this.apiKey) || this.apiKey === '1234') {
-      filepath = '../invalid-api-key'
-    } else if (title === '') {
-      filepath = 'empty-route-param'
-    } else if (/\s+/.test(title)) {
-      filepath = 'too-many-results'
+      filepath = 'invalid-api-key'
+    } else if (stringIsEmpty(title)) {
+      filepath = 'titlesearch/empty-route-param'
+    } else if (/^\s+$/.test(title)) {
+      filepath = 'titlesearch/too-many-results'
     }
 
-    return import(`./data/titlesearch/${filepath}.json`)
+    return modules['./data/' + filepath + '.json']()
       .then(({ default: data }) => {
-        /** @type {OMDbMoviesDTO[]} */
+        /** @type {import(".").OMDbMoviesDTO[]} */
         const results = Array.from(
-          /** @type {OMDbMoviesApiDTO[]} */
+          /** @type {import(".").OMDbMoviesApiDTO[]} */
           data?.Search ?? [],
           titleSearchResultMapper
         ).filter((item) => stringCaseInsensitiveContains(item.title, title))
-        if (filepath !== 'no-results' && stringIsFalse(data.Response)) {
+        // bypassing no-results errors as empty arrays
+        if (
+          filepath !== 'titlesearch/no-results' &&
+          stringIsFalse(data.Response)
+        ) {
           throw new OMDbError(data.Error)
         }
+        const pagedResults = results.slice((page - 1) * 10, page * 10)
         return {
-          results: results.slice((page - 1) * 10, page * 10),
-          count: Number(data?.totalResults ?? 0)
+          results: pagedResults,
+          count: Number(pagedResults.length === 0 ? 0 : data?.totalResults ?? 0)
         }
       })
       .catch((e) => {

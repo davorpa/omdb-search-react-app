@@ -1,3 +1,7 @@
+export function isNullish(a) {
+  return a === null || typeof a === 'undefined'
+}
+
 export function stringCaseInsensitiveEquals(a, b) {
   return typeof a === 'string' && typeof b === 'string'
     ? a.localeCompare(b, undefined, { sensitivity: 'accent' }) === 0
@@ -22,6 +26,16 @@ export function stringIsFalse(a) {
 
 export function stringIsTrue(a) {
   return typeof a === 'string' ? a.toLocaleLowerCase() === 'true' : a === true
+}
+
+export function stringIsEmpty(a) {
+  if (isNullish(a)) return true
+  return typeof a === 'string' ? a.length === 0 : false
+}
+
+export function stringIsBlank(a) {
+  if (isNullish(a)) return true
+  return typeof a === 'string' ? a.trim().length === 0 : false
 }
 
 export function stringToTitleCase(a) {
