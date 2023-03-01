@@ -77,7 +77,8 @@ export default ({ command, mode }) => {
         '@components': srcAliasOf('components'),
         '@context': srcAliasOf('context'),
         '@hooks': srcAliasOf('hooks'),
-        '@services': srcAliasOf('services')
+        '@services': srcAliasOf('services'),
+        '@shared': srcAliasOf('shared')
       }
     },
     server: {

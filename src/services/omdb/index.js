@@ -10,7 +10,7 @@ import {
   stringCaseInsensitiveContains,
   stringCaseInsensitiveEquals,
   stringIsFalse
-} from '../utils'
+} from '@shared/utils'
 
 /**
  * The OMDb Format Type enum.

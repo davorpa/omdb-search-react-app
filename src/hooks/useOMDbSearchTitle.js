@@ -2,7 +2,7 @@ import { useCallback, useMemo, useRef, useState } from 'react'
 import getProperty from 'just-safe-get'
 import { useOMDbClient } from '@hooks/useOMDbClient'
 import { useActionMessages } from '@hooks/useActionMessages'
-import { stringCaseInsensitiveCompare } from '@services/utils'
+import { stringCaseInsensitiveCompare } from '@shared/utils'
 
 const defaultSearchParams = {
   title: '',

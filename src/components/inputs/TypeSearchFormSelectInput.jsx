@@ -3,7 +3,7 @@ import reactPropTypes from 'prop-types'
 import clsx from 'clsx'
 import corePropTypes from '../prop-types'
 import { handleComponentInputOnChange } from './utils'
-import { stringToTitleCase } from '@services/utils'
+import { stringToTitleCase } from '@shared/utils'
 import OMDbResultType from '@services/omdb/OMDbResultType'
 
 /**
