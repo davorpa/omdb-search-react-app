@@ -46,6 +46,8 @@ class OMDbJSONClient extends OMDbAbstractClient {
       filepath = 'invalid-api-key'
     } else if (stringIsEmpty(title)) {
       filepath = 'titlesearch/empty-route-param'
+    } else if (title.length > 250) {
+      filepath = 'titlesearch/syntax-error-query-too-long'
     } else if (/^\s+$/.test(title)) {
       filepath = 'titlesearch/too-many-results'
     }

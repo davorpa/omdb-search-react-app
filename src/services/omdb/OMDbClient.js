@@ -92,12 +92,13 @@ class OMDbClient extends OMDbAbstractClient {
   async #processResponseJSON(/** @type {Response} */ response) {
     // parse response
     let data = {}
-    let error = null
+    let savedError = null
     try {
       data = await response.json()
-    } catch (e) {
-      error = e
+    } catch (err) {
+      savedError = err
     }
+    if (savedError !== null) throw new OMDbError(savedError)
     // customize error extracted from parsed response
     if (stringIsFalse(data.Response) || data.Error) {
       if (
@@ -107,14 +108,17 @@ class OMDbClient extends OMDbAbstractClient {
         )
       ) {
         throw new OMDbError(
-          `E${response.status}: ${data.Error || response.statusText}`
+          `E${String(response.status).padStart(3, '0')}: ${
+            data.Error || response.statusText
+          }`
         )
       }
     }
     if (!response.ok) {
-      throw new OMDbError(`E${response.status}: ${response.statusText}`)
+      throw new OMDbError(
+        `E${String(response.status).padStart(3, '0')}: ${response.statusText}`
+      )
     }
-    if (error !== null) throw new OMDbError(error)
     // return valid response JSON data
     return data
   }
