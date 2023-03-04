@@ -94,7 +94,8 @@ describe('OMDbJSONClient', () => {
     // Then
     await expect(methodSupplier).rejects.to.throw(
       OMDbError,
-      /Failed to parse JSON file, invalid JSON syntax found at line \d+/i
+      // /Failed to parse JSON file, invalid JSON syntax found at line \d+/i
+      /Syntax error near '"' in the full-text search condition/
     )
   })
 })
