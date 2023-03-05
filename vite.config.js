@@ -50,7 +50,15 @@ export default ({ command, mode }) => {
       coverage: {
         provider: 'c8',
         reportsDirectory: './target/coverage',
-        reporter: ['json', 'lcov', 'text', 'text-summary']
+        reporter: [
+          'json',
+          'json-summary',
+          'lcovonly',
+          'text',
+          'text-summary',
+          'clover',
+          'cobertura'
+        ]
       },
       environment: 'node',
       environmentMatchGlobs: [
