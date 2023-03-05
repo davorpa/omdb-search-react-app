@@ -32,14 +32,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          # cache: 'npm'
-      - name: Install dependencies
-        run: |
-          npm install --no-fund --no-audit
+
+      - name: Setup
+        uses: ./.github/actions/setup-repo
+
       - name: Run code linter
         run: |
           npm run lint
@@ -51,17 +47,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          # cache: 'npm'
-      - name: Install dependencies
-        run: |
-          npm install --no-fund --no-audit
+
+      - name: Setup
+        uses: ./.github/actions/setup-repo
+
       - name: Run webapp builder
         run: |
           npm run build
+
       - name: Upload dist artifact
         uses: actions/upload-artifact@v3
         with:
@@ -75,18 +68,15 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          # cache: 'npm'
-      - name: Install dependencies
-        run: |
-          npm install --no-fund --no-audit
+
+      - name: Setup
+        uses: ./.github/actions/setup-repo
+
       - name: Run docs generator
 #        continue-on-error: true
         run: |
           npm run generate-docs
+
       - name: Upload docs artifact
         uses: actions/upload-artifact@v3
         with:
@@ -98,27 +88,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [14, 16, 18]
+        node-version: [14.x, 16.x, 18.x]
     name: Test (Node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout project
         uses: actions/checkout@v3
         with:
           fetch-depth: 1
-      - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-repo
         with:
           node-version: ${{ matrix.node-version }}
-          # cache: 'npm'
-      - name: Install dependencies
-        run: |
-          npm install --no-fund --no-audit
+
       - name: Download dist artifact
         uses: actions/download-artifact@v3
         with:
           name: ${{ github.event.repository.name }}--dist--${{ github.run_id }}
           path: dist
+
       - name: Run tests
         run: |
           npm run test
