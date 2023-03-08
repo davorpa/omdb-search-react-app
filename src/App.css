@@ -79,6 +79,7 @@ div.message {
   margin-bottom: 15px;
   padding: 12px;
   border-left: 6px solid #8b8b8b;
+  color: #262626;
 }
 
 div.message.danger {
@@ -204,6 +205,7 @@ div.message.warning {
 .card {
   --card-border-radius: 6px;
   --card-color: var(--focus);
+  background-color: #0096bf23;
   border: 1px dotted var(--card-color);
   padding: 10px;
   border-radius: var(--card-border-radius);
