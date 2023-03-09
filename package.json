@@ -14,8 +14,8 @@
     "test:watch": "vitest --coverage --watch",
     "test:ui": "vitest --ui",
     "generate-docs": "jsdoc -c jsdoc.json",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build && touch dist/.nojekyll",
+    "deploy": "gh-pages -d dist -t true"
   },
   "dependencies": {
     "clsx": "1.2.1",
