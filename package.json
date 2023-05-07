@@ -39,7 +39,7 @@
     "eslint-config-standard-jsx": "11.0.0",
     "eslint-config-standard-react": "13.0.0",
     "gh-pages": "5.0.0",
-    "happy-dom": "8.9.0",
+    "happy-dom": "9.10.9",
     "jsdoc": "4.0.2",
     "jsdoc-plugin-typescript": "2.2.1",
     "jsdom": "21.1.1",
