@@ -57,7 +57,7 @@ jobs:
           npm install -g --no-fund --no-audit lighthouse-badges
       - name: Generate LightHouse badges
         run: |
-          lighthouse-badges --save-report --output target/lighthouse --urls "${{ steps.vars.outputs.deploy-url }}"
+          lighthouse-badges --save-report --output target/lighthouse --url "${{ steps.vars.outputs.deploy-url }}"
 
       - name: Upload lighthouse artifact
         uses: actions/upload-artifact@v3
